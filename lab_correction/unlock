@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -e
+
+read -p "Which module do you want to unlock? (01, 02, 03...): " module
+
+read -p "Enter unlock code: " code
+
+find "./${module}" -type f -name "*.cpt" | xargs --no-run-if-empty ccrypt --key $code -d
+
+echo "Done!"

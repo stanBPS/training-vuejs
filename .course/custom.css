@@ -1,0 +1,30 @@
+ .reveal {
+     font-size: 30px;
+ }
+ 
+ .reveal h1 {
+     font-size: 3em;
+ }
+ 
+ .reveal h2 {
+     font-size: 2em;
+ }
+ 
+ .reveal h3 {
+     font-size: 1.2em;
+ }
+ 
+ .reveal h4 {
+     font-size: 1em;
+ }
+ 
+ .reveal section img {
+     background: none;
+     border: none;
+     padding: 5px;
+ }
+ 
+ .reveal pre code {
+     max-height: 550px;
+     word-wrap: normal;
+ }

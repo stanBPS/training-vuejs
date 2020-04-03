@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -e
+
+read -p "Which module do you want to lock? (01, 02, 03...): " module
+
+read -p "Enter lock code for module ${module}: " code
+
+find "./${module}" -type f -and ! -name "*.cpt" -and ! -name "lock" -and ! -name "unlock" | xargs --no-run-if-empty ccrypt --key $code -e
+
+echo "Done!"
