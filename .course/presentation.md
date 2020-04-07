@@ -18,15 +18,15 @@ title: "Vue.js"
 
 ## Plan
 
-|           | Module                             | Cours   | TD     |
-| :-------: |  --------------------------------- | :-----: | :----: |
-| 01        | Introduction                       | 1h      | 1h     |
-| 02        | Interactions avec le DOM           | 1h      | 1h     |
-| 03        | Les composants                     | 1h      | 1h     |
-| 04        | Mise à l'échelle                   | 1h      | 1h     |
-| 05        | La navigation et la gestion d'état | 1h      | 0h     |
-| 06        | Les tests                          | 1h      | 0h     |
-| **Total** |                                    | **5h**  | **5h** |
+|           | Module                                       | Cours   | TD     |
+| :-------: |  ------------------------------------------- | :-----: | :----: |
+| 01        | Introduction                                 | 1h      | 1h     |
+| 02        | Les Bindings et les interactions utilisateur | 1h      | 1h     |
+| 03        | Les composants                               | 1h      | 1h     |
+| 04        | Mise à l'échelle                             | 1h      | 1h     |
+| 05        | La navigation et la gestion d'état           | 1h      | 0h     |
+| 06        | Les tests                                    | 1h      | 0h     |
+| **Total** |                                              | **5h**  | **5h** |
 
 ---
 
@@ -550,7 +550,10 @@ const app = new Vue({
 
 <div id="app">
 
-    <!-- v-show "bind" la propriété seen pour conditionner la visilbilité de l'élément -->
+    <!--
+        v-show "bind" la propriété seen
+        pour conditionner la visibilité de l'élément
+    -->
     <span v-show="seen">Now you see me</span>
 
 </div>
@@ -733,3 +736,694 @@ const app = new Vue({
 4. Modifier pour que les films non encore sortis soient affichés en rouge
 
 5. Modifier pour n'afficher que les films dont la note est supérieure à 2
+
+---
+
+## Module 02
+### Les Bindings et les interactions utilisateur
+
+--
+
+### Les Bindings
+
+--
+
+#### L'instance et son contexte réactif
+[vue instance](https://vuejs.org/v2/guide/instance.html)
+
+```html
+<script>
+const app = new Vue({ // 1 instance de Vue est créé et assignée à la variable app
+    el: '#app',
+
+    // Les données 'bindées' sont dans l'objet data
+    data: {
+        myData1: 'a string',
+        myData2: 'another string',
+    }
+});
+
+// Les données peuvent être accédées directement sur l'instance
+console.log(app.myData1); // Output -> 'a string'
+
+// Les données peuvent être modifiées (entraine une mise à jour de l'affichage)
+app.myData1 = 'Surprise!'; 
+
+// Attention : les propriétés ajoutées dynamiquement ne seront pas réactives !
+app.noWayImNotReactive = 'Hello!';
+app.noWayImNotReactive = 'Hello?';
+app.noWayImNotReactive = 'Hello???';
+</script>
+
+<div id="app">
+    <div>{{ myData1 }}</div>
+    <div>{{ noWayImNotReactive }}</div>
+</div>
+```
+
+--
+
+#### Limites de l'objet `data`
+
+Comment faire si je veux afficher le message avec la 1ère lettre en majuscule ?
+
+```html
+<script>
+
+    const app = new Vue({
+        el: '#app',
+        data: {
+            message: 'hello world!',
+        },
+    });
+
+</script>
+
+<div id="app">
+
+    <span>{{ message.charAt(0).toUpperCase() + message.slice(1) }}</span>
+</div>
+```
+
+Il faut éviter de mettre trop de logique dans les templates !
+
+--
+
+#### Les propriétés calculées
+[computed](https://vuejs.org/v2/guide/computed.html)
+
+```html
+<script>
+    const app = new Vue({
+        el: '#app',
+        data: { message: 'hello world!' },
+
+        // Les propriétés calculées sont dans l'objet computed
+        computed: {
+            messageCapitalized: function() {
+
+                // this est l'objet app
+                return this.message.charAt(0).toUpperCase() + message.slice(1);
+            }
+        }
+    });
+
+    // Peut être accédée comme une propriété standard mais ne peut pas être modifiée
+    console.log(app.computed);      // Output -> 'Hello world!'
+    app.computed = 'Surprise';      // Renvoie une Erreur
+
+    // Si message est modifié, l'affichage de messageCapitalized va être mis à jour
+    app.message = 'Coucou le monde !';
+</script>
+
+<div id="app">
+    <span>{{ messageCapitalized }}</span>
+</div>
+```
+
+--
+
+#### Les propriétés calculées avec setter
+[computed setter](https://vuejs.org/v2/guide/computed.html#Computed-Setter)
+
+```html
+<script>
+    const app = new Vue({
+        el: '#app',
+        data: { firstName: 'John', lastName: 'Doe' },
+
+        computed: { // la propriété est un objet qui contient 2 fonctions get & set
+            fullName: {
+
+                get: function() {
+                    return this.firstName + ' ' + this.lastName;
+                }
+
+                set: function (newValue) {
+                    const names = newValue.split(' ');
+                    this.firstName = names[0];
+                    this.lastName = names[names.length - 1];
+                }
+            }
+        }
+    });
+
+    console.log(app.fullName);          // Le getter sera invoqué 
+    app.fullName = 'John McClane';      // Le setter sera invoqué
+
+</script>
+
+<div id="app"><span>{{ fullName }}</span></div>
+```
+
+--
+
+#### Les Observateurs
+[watchers](https://vuejs.org/v2/guide/computed.html#Watchers)
+
+```html
+<script>
+    const app = new Vue({
+        el: '#app',
+        data: { message: 'Hello world!' },
+
+        watch: {
+
+            // Invoque la fonction à chaque fois que la propriété 'message' change
+            message: function(oldMessage, newMessage) {
+                if (oldMessage === newMessage) {
+                    displayMessage('Seriously? Are you kidding?');
+                }
+            }
+        }
+    });
+</script>
+
+<div id="app">
+    <span>{{ fullName }}</span>
+</div>
+```
+
+--
+
+#### Les méthodes
+[methods](https://vuejs.org/v2/api/#methods)
+
+```html
+<script>
+    const app = new Vue({
+        el: '#app',
+        data: { weird: 'Weird!' },
+
+        methods: {
+
+            doSomethingWeird() {
+
+                // this référence l'application app
+                myWeirdApi.run(this.weird);
+
+            }
+
+            saveUser(user) {
+
+                myUserApi.save(user);
+
+            }
+        }
+    });
+</script>
+
+<div id="app"><span>{{ fullName }}</span></div>
+```
+
+--
+
+### Les événements
+
+--
+
+#### Ecouter des événements
+[v-on](https://vuejs.org/v2/api/#v-on)
+
+```html
+<script>
+    const app = new Vue({ el: '#app' });
+</script>
+
+<!-- Exemple classique (sans vue) -->
+<button onclick="alert('Hello!');">Click me!</button>
+
+<div id="app">
+
+    <!--
+        Exemple avec vue
+        Syntaxe est v-on:eventName
+    -->
+    <button v-on:click="alert('Hello!');">Click me!</button>
+
+</div>
+```
+
+--
+
+#### Appeler un handler
+[v-on handler](https://vuejs.org/v2/guide/events.html#Method-Event-Handlers)
+
+```html
+<script>
+    const app = new Vue({
+        el: '#app',
+        methods: {
+
+            // Le handler fait partie des methods
+            // Il prend en paramètre l'événement natif provenant du DOM
+            callMeOnButtonClick: function(event) {
+
+                console.log(event);
+
+            }
+        }
+    });
+</script>
+
+<div id="app">
+
+    <!-- il est possible de donner une référence de méthode -->
+    <button v-on:click="callMeOnButtonClick">Click me!</button>
+
+    <!-- il est possible d'exécuter la méthode directement -->
+    <button v-on:click="callMeOnButtonClick($event)">Click me!</button>
+
+</div>
+```
+
+--
+
+#### Syntaxe courte
+[@](https://vuejs.org/v2/api/#v-on)
+
+```html
+<script>
+    const app = new Vue({ el: '#app' });
+</script>
+
+<div id="app">
+
+    <!-- Syntaxe classique -->
+    <button v-on:click="alert('Hello!')">Click me!</button>
+
+    <!-- Syntaxe courte -->
+    <button @click="alert('Hello!')">Click me!</button>
+
+</div>
+```
+
+--
+
+#### Les modificateurs
+[modifiers](https://vuejs.org/v2/guide/events.html#Event-Modifiers)
+
+```html
+<script>
+    const app = new Vue({ el: '#app' });
+</script>
+
+<div id="app">
+
+    <!--
+        .stop est un modifier
+        qui appelle event.stopPropagation() sur l'événement natif
+    -->
+    <button @click.stop="alert('Hello!')">Click me!</button>
+
+    <!--
+        .prevent est un modifier
+        qui appelle event.preventDefault() sur l'événement natif
+    -->
+    <button @click.prevent="alert('Hello!')">Click me!</button>
+
+
+    <!--
+        .once est un modifier
+        l'événement sera déclenché (au plus) 1 fois
+    -->
+    <button @click.prevent="alert('Hello!')">Click me!</button>
+
+</div>
+```
+
+--
+
+#### Les événements du clavier
+[keyboard modifiers](https://vuejs.org/v2/guide/events.html#Key-Modifiers)
+
+```html
+<script>
+    const app = new Vue({ el: '#app' });
+</script>
+
+<div id="app">
+
+    <!-- event sur toutes les touches -->
+    <input v-on:keyup="submit">
+
+    <!-- event sur touche PageDown -->
+    <input v-on:keyup.page-down="submit">
+
+    <!-- event sur combinaison de touches Alt + C -->
+    <input v-on:keyup.alt.67="submit">
+
+    <!-- event sur combinaison Ctrl + Click -->
+    <input v-on:click.ctrl="submit">
+
+</div>
+```
+
+Vue fournit des alias pour les codes touches communs
+
+`
+enter
+tab
+delete
+esc
+space
+up
+down
+left
+right
+`
+
+--
+
+#### Les événements de la souris
+[mouse modifiers](https://vuejs.org/v2/guide/events.html#Mouse-Button-Modifiers)
+
+```html
+<script>
+    const app = new Vue({ el: '#app' });
+</script>
+
+<div id="app">
+
+    <!-- event sur tous les clics -->
+    <button v-on:click="submit">Click me!</button>
+
+    <!-- event sur clic gauche -->
+    <button v-on:click.left="submit">Click me!</button>
+
+    <!-- event sur clic droit -->
+    <button v-on:click.right="submit">Click me!</button>
+
+    <!-- event sur clic du milieu -->
+    <button v-on:click.middle="submit">Click me!</button>
+
+</div>
+```
+
+--
+
+### Binding bidirectionnel
+
+--
+
+#### Sans binding bidirectionnel...
+
+```html
+<script>
+    const app = new Vue({
+        el: '#app',
+        data: {
+            myValue: 'Hello!',
+        },
+
+        methods: {
+            updateMyValue: function(event) {
+                this.message = event.target.value;
+            }
+        }
+    });
+</script>
+
+<div id="app">
+
+    <!--
+        Binding data.myValue -> input.value
+        Event input.change -> updateMyValue
+    -->
+    <input type="text" :value="myValue" @input="updateMyValue($event)">
+
+</div>
+```
+
+--
+
+#### Avec binding bidirectionnel...
+[v-model](https://vuejs.org/v2/api/#v-model)
+```html
+<script>
+    const app = new Vue({
+        el: '#app',
+        data: {
+            myValue: 'Hello!',
+        },
+    });
+</script>
+
+<div id="app">
+
+    <!--
+        Binding data.myValue -> input.value
+        Binding input.value  -> data.myValue
+    -->
+    <input type="text" v-model="myValue">
+
+    <!--
+        v-model fonctionne pour les éléments :
+
+            - <input type="text"> (propriété value / événement input)
+            - <input type="checkbox"> (propriété checked / événement change)
+            - <textarea> (propriété value / événement input)
+            - <select> (propriété value / événement change)
+    -->
+
+</div>
+```
+
+--
+
+#### Binding bidirectionnel Text
+
+```html
+<script>
+    const app = new Vue({
+        el: '#app',
+        data: {
+            myValue: 'Hello!',
+        },
+    });
+</script>
+
+<div id="app">
+
+    <input type="text" v-model="myValue">
+
+    <textarea v-model="myValue"><.textarea>
+
+</div>
+```
+
+--
+
+#### Binding bidirectionnel Case à cocher
+
+```html
+<script>
+    const app = new Vue({
+        el: '#app',
+        data: {
+            myValue: true,
+        },
+    });
+</script>
+
+<div id="app">
+
+    <!-- myValue est un booléen -->
+    <input type="checkbox" v-model="myValue">
+
+</div>
+```
+
+--
+
+#### Binding bidirectionnel Groupe de Cases à cocher
+
+```html
+<script>
+    const app = new Vue({
+        el: '#app',
+        data: {
+            myValue: ['A', 'C'],
+        },
+    });
+</script>
+
+<div id="app">
+
+    <!-- myValue est un tableau -->
+    <input type="checkbox" v-model="myValue" value="A">
+    <input type="checkbox" v-model="myValue" value="B">
+    <input type="checkbox" v-model="myValue" value="C">
+
+</div>
+```
+
+--
+
+#### Binding bidirectionnel Boutons Radio
+
+```html
+<script>
+    const app = new Vue({
+        el: '#app',
+        data: {
+            myValue: 'B',
+        },
+    });
+</script>
+
+<div id="app">
+
+    <!-- myValue est une String -->
+    <input type="radio" v-model="myValue" value="A">
+    <input type="radio" v-model="myValue" value="B">
+    <input type="radio" v-model="myValue" value="C">
+
+</div>
+```
+
+--
+
+#### Binding bidirectionnel Liste de choix
+
+```html
+<script>
+    const app = new Vue({
+        el: '#app',
+        data: {
+            myValue: 'B',
+        },
+    });
+</script>
+
+<div id="app">
+
+    <!-- myValue est une String -->
+    <select v-model="myValue">
+        <option>A</option>
+        <option>B</option>
+        <option>C</option>
+    </select>
+
+</div>
+```
+
+--
+
+#### Binding bidirectionnel Liste de choix multivaluée
+
+```html
+<script>
+    const app = new Vue({
+        el: '#app',
+        data: {
+            myValue: ['A', 'C'],
+        },
+    });
+</script>
+
+<div id="app">
+
+    <!-- myValue est un tableau -->
+    <select v-model="myValue" multiple>
+        <option>A</option>
+        <option>B</option>
+        <option>C</option>
+    </select>
+
+</div>
+```
+
+--
+
+### Les filtres
+
+--
+
+#### Créer un filtre
+[a | b](https://vuejs.org/v2/guide/filters.html)
+
+```html
+<script>
+    const app = new Vue({
+        el: '#app',
+        data: { myValue: 'hello world!' },
+
+        filters: {
+            capitalize: function (value) {
+                return value.charAt(0).toUpperCase() + value.slice(1);
+            }, 
+
+            lol: function (value, extra) {
+                return `${value} ${extra}!!!`;
+            }, 
+        }
+    });
+</script>
+
+<div id="app">
+
+    <!-- Les filtres sont chainés avec des pipes (comme unix) -->
+    <div>{{ myValue | capitalize | lol }}</div>
+
+    <!-- Les filtres sont aussi utilisables dans les directives -->
+    <input :value="myValue | capitalize | lol('extra')">
+</div>
+```
+
+--
+
+### Labs
+
+<img src="images/lab.png">
+
+--
+
+### lab/02/01
+#### Implémenter une librairie en ligne...
+
+```md
+- Catalogue
+    - Affichage liste de catégories (Policier, SF...)
+    - Affichage liste de livres en fonction de la catégorie
+    - Ajout des livres au panier (pas de doublons)
+
+- Panier
+    - Affichage articles commandés
+    - Affichage total du panier
+    - Suppression possible (croix rouge)
+
+- Coordonnées
+    - Saisie des infos client (nom, prénom...)
+    - Affichage liste des pays supportés
+
+- Bouton payer
+    - Accessible si au moins 1 article dans le panier
+    - Accessible si les coordonnées sont toutes renseignées
+    - Au clic, le panier et les coordonnées sont vidées
+```
+
+--
+
+### lab/02/01
+#### Tips
+
+```md
+- Une variable globale contient le catalogue (voir data.js)
+    - categories
+
+- Une variable globale contient les pays (voir data.js)
+    - countries
+
+- Pour trier des objets par rapport à une prop a -> z (categories...)
+    - Regarder la fonction String.prototype.localeCompare...
+
+- Pour formatter les prix
+    - Regarder la fonction Number.prototype.toFixed...
+
+- Pour supprimer un élément d'un tableau
+    - Regarder la fonction Array.prototype.splice...
+
+- Pour activer /désactiver un bouton
+    - Regarder la propriété disabled de l'élément HTML button...
+```

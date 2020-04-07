@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <!--
+        Twitter Bootstrap
+        See (https://getbootstrap.com/)
+    -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+    <!-- Vue.js -->
+    <script src="https://unpkg.com/vue"></script>
+
+    <!-- Data -->
+    <script src="data.js"></script>
+
+    <!-- App -->
+    <script src="app.js"></script>
+</head>
+
+<body onload="initApp()" class="bg-light">
+
+    <h2>Lab 02/02</h2>
+
+    <div class="container" id="app">
+        <div class="row p-3">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title"><i class="fa fa-search"></i>&nbsp;Catalogue</h4>
+                        <div class="form-group">
+                            <label for="category">Catégorie</label>
+                            <select id="category" class="form-control">
+                                <option>Policier</option>
+                                <option>Littérature</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="item">Article</label>
+                            <select id="item" class="form-control">
+                                <option>Un avion sans elle (Michel Bussi)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <button type="button" class="btn btn-secondary btn-block">Ajouter au panier</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title"><i class="fa fa-shopping-cart"></i>&nbsp;Panier</h4>
+                        <ul class="list-group mb-3">
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <h6>Un avion sans elle</h6>
+                                    </div>
+                                    <div class="col-md-3 text-right">
+                                        <span class="text-muted">11.00 €</span>
+                                    </div>
+                                    <div class="col-md-1 text-right">
+                                        <a href="#" class="text-danger"><i class="fa fa-remove"></i></a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h6 class="text-muted">Michel Bussi</h6>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <h6>Dans le bois</h6>
+                                    </div>
+                                    <div class="col-md-3 text-right">
+                                        <span class="text-muted">9.90 €</span>
+                                    </div>
+                                    <div class="col-md-1 text-right">
+                                        <a href="#" class="text-danger"><i class="fa fa-remove"></i></a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h6 class="text-muted">Harlan Coben</h6>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item bg-light">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <h6><strong>Total</strong></h6>
+                                    </div>
+                                    <div class="col-5 text-right">
+                                        <span><strong>20.90 €</strong></span>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row p-3">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title"><i class="fa fa-address-card-o"></i>&nbsp;Coordonnées</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="lastName">Nom</label>
+                                    <input type="text" class="form-control" id="lastName">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="firstName">Prénom</label>
+                                    <input type="text" class="form-control" id="firstName">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="address">Adresse</label>
+                                    <input type="text" class="form-control" id="address">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="zipCode">Code postal</label>
+                                    <input type="text" class="form-control" id="zipCode">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="country">Pays</label>
+                                    <select id="country" class="form-control">
+                                        <option v-for="country in countries">France</option>
+                                        <option v-for="country in countries">Germany</option>
+                                        <option v-for="country in countries">Portugal</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="row p-3">
+            <div class="col-md-12">
+                <button type="button" class="btn btn-lg btn-block btn-primary">Payer !</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="app"></div>
+
+</body>
+
+</html>
