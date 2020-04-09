@@ -170,8 +170,8 @@ and build something really lightweight..."
 
 [React.js](https://reactjs.org/)
 [Vue.js](https://vuejs.org/)
-[Angular](https://angular.io/)
 [Svelte](https://svelte.dev/)<small>NEW!</small>
+[Angular](https://angular.io/)
 
 <img src="images/comic_stack.jpg" style="height: 420px">
 
@@ -1393,13 +1393,13 @@ right
     - Affichage total du panier
     - Suppression possible (croix rouge)
 
-- Coordonnées
+- Contact
     - Saisie des infos client (nom, prénom...)
     - Affichage liste des pays supportés
 
 - Bouton payer
     - Accessible si au moins 1 article dans le panier
-    - Accessible si les coordonnées sont toutes renseignées
+    - Accessible si toutes les infos du contact sont renseignées
     - Au clic, le panier et les coordonnées sont vidées
 ```
 
@@ -1426,4 +1426,1024 @@ right
 
 - Pour activer /désactiver un bouton
     - Regarder la propriété disabled de l'élément HTML button...
+```
+
+---
+
+## Module 03
+### Les Composants
+
+--
+
+### Rappel
+
+Eléments **indépendants** et **réutilisables**
+
+<img src="images/component_layout.png">
+
+--
+
+### Créer des composants avec Vue.js
+
+--
+
+#### Anatomie d'un composant
+
+```javascript
+// Un composant est un object JavaScript
+const myComponent = {
+
+    // Attention !
+    // data est une fonction qui retourne les données à binder
+    data: function() {
+        return {
+            count: 0,
+        }
+    },
+
+    // un composant peut avoir des methods, computed, watch, filters...
+    methods: {
+        add: function() {
+            this.count++;
+        }
+    },
+
+    // Définit la template html du composant (sous forme de String)
+    template: '<button @click="add">Nb clicks = {{ count }}</button>',
+
+};
+```
+
+--
+
+#### Template multi-lignes
+
+```javascript
+const myComponent = {
+
+    data: function() {
+        return {
+            count: 0,
+        }
+    },
+
+    methods: {
+        add: function() {
+            this.count++;
+        }
+    },
+
+    // template définie dans un littéral de gabarit JavaScript (`toto ${toto}`)
+    template: `
+        <div class="toto">
+            <div class="tutu">
+                <button @click="add">Nb clicks = {{ count }}</button>
+            </div>
+        </div>
+    `,
+};
+```
+
+--
+
+#### Enregistrer et Utiliser un composant
+[registration](https://vuejs.org/v2/guide/components-registration.html)
+
+```html
+<!DOCTYPE html>
+<html>
+    <head>
+        <script>
+            // Des composants Vue.js
+            const MyComponent      = { ... };
+            const MyOtherComponent = { ... };
+
+            const app = new Vue({
+                el: '#app',
+
+                // Les composants sont enregistrés avec un nom
+                components: {
+                    'my-component-is-awesome'        : MyComponent,
+                    'my-other-component-is-great-too': MyOtherComponent,
+                }
+            });
+        </script>
+
+    </head>
+    <body>
+        <div id="app">
+            <my-component-is-awesome></my-component-is-awesome>
+            <my-other-component-is-great-too></my-other-component-is-great-too>
+        </div>
+    </body>
+</html>
+```
+
+--
+
+#### Les instances des composants
+
+Les composants Vue.js sont des
+[instances Vue](https://vuejs.org/v2/guide/instance.html)
+à part entière
+
+Ils possèdent donc leurs propres \
+[data](https://vuejs.org/v2/api/#data) \
+[methods](https://vuejs.org/v2/api/#methods) \
+[computed](https://vuejs.org/v2/guide/computed.html) \
+[watchers](https://vuejs.org/v2/guide/computed.html#Watchers)
+
+--
+
+#### Réutiliser un composant
+
+```html
+<!DOCTYPE html>
+<html>
+    <head>
+        <script>
+            const MyComponent = { ... };
+
+            const app = new Vue({
+                el: '#app',
+
+                components: {
+                    'foo': MyComponent,
+                    'bar': MyComponent,
+                }
+            });
+        </script>
+
+    </head>
+    <body>
+        <div id="app">
+
+            <!-- Chaque composant a sa propre instance (état...)-->
+            <foo></foo>
+            <bar></bar>
+
+        </div>
+    </body>
+</html>
+```
+
+--
+
+#### Enregistrer un sous-composant
+
+Les composants peuvent être imbriqués
+
+```html
+<html>
+    <head>
+        <script>
+            const MyNestedComponent = { template: '<p>Nested!!!</p>' };
+
+            const MyMainComponent = { 
+                components: {
+                    nested: MyNestedComponent,
+                },
+                template: '<p>Main!!!<nested></nested></p>',
+            };
+
+            const app = new Vue({
+                el: '#app',
+                components: {
+                    'main': MyMainComponent,
+                }
+            });
+        </script>
+    </head>
+
+    <body>
+        <div id="app">
+            <main></main>
+        </div>
+    </body>
+</html>
+```
+
+--
+
+#### Enregistrer un composant global (utilisable partout)
+[global](https://vuejs.org/v2/guide/components-registration.html#Global-Registration)
+
+```html
+<html>
+    <head>
+        <script>
+
+            const MyGlobalComponent = { template: '<p>Global!!!</p>' };
+
+            Vue.component('global', MyGlobalComponent)
+
+            const app = new Vue({
+                el: '#app',
+
+                // Les composants globaux n'ont pas besoin d'être enregistrés
+                components: {}
+            });
+        </script>
+    </head>
+    
+    <body>
+        <div id="app">
+
+            <global></global>
+
+        </div>
+    </body>
+</html>
+```
+
+--
+
+### La communication entre les composants
+#### [`Les props`](https://vuejs.org/v2/guide/components-props.html)
+
+--
+
+#### Passer des propriétés à un composant
+
+```html
+<html>
+    <head>
+        <script>
+            const MyComponent = {
+
+                // Les propriétés attendues en entrée par le composant
+                props: ['messageToDisplay'],
+
+                // Les propriétés sont utilisables dans les templates
+                template: '<p>{{ messageToDisplay }}</p>'
+            };
+            
+            const app = new Vue({
+                el: '#app',
+                components: { 'my-component': MyComponent }
+            });
+        </script>
+    </head>
+    <body>
+        <div id="app">
+            <!--
+                Les propriétés sont valorisées par les attributs HTML
+                CamelCase -> kebab-case
+            -->
+            <my-component message-to-display="Hello World!"></my-component>
+        </div>
+    </body>
+</html>
+```
+
+--
+
+#### Passer des propriétés dynamiques
+
+```html
+<html>
+    <head>
+        <script>
+            const MyComponent = {
+                props: [message],
+                template: '...'
+            };
+            
+            const app = new Vue({
+                el: '#app',
+                components: { 'my-component': MyComponent },
+                data: {
+                    blablaVar: 'Blabla!',
+                }
+            });
+        </script>
+    </head>
+    
+    <body>
+        <div id="app">
+
+            <!-- v-bind peut être utilisé dans les props -->
+            <my-component v-bind:message="blablaVar"></my-component>
+            <my-component       :message="blablaVar"></my-component>
+        </div>
+    </body>
+</html>
+```
+
+--
+
+#### Typer les propriétés
+
+```html
+<html>
+    <head>
+        <script>
+            const MyComponent = {
+                // Les propriétés peuvent être typées
+                // (String, Number, Boolean, Array, Object, Date, Function)
+                props: { 
+                    message: String,
+                    amount:  Number,
+                    ok:      Boolean,
+                },
+            };
+            const app = new Vue({ components: { 'my-component': MyComponent } });
+        </script>
+    </head>
+    <body>
+        <div id="app">
+            <!--
+                v-bind doit être utilisé
+                pour que Vue invoque une expression JavaScript
+                et ne passe pas les Strings '42.21' et 'true'
+            -->
+            <my-component message="Hello World!" :amount="42.21" :ok="true">
+            </my-component>
+        </div>
+    </body>
+</html>
+```
+
+--
+
+#### Valider les propriétés
+
+```html
+<html>
+    <head>
+        <script>
+            const MyComponent = {
+                props: {
+                    message: {
+                        type:      String,              // type
+                        required:  true,                // obligatoire
+                        validator: function(value) {    // fonction de validation
+                            value.length > 20
+                        },
+                    },
+                    amount: {
+                        type:    Number,
+                        default: 100,                   // valeur par défaut
+                    },
+                },
+
+                template: '...'
+            };
+        </script>
+    </head>
+</html>
+```
+
+--
+
+#### Le binding des propriétés
+[one way data flow](https://vuejs.org/v2/guide/components-props.html#One-Way-Data-Flow)
+
+**Unidirectionnel !**
+<br><br>
+
+- Si la valeur de la propriété change dans le composant parent
+    - le changement est propagé dans le composant enfant
+
+<br><br>
+
+- Si la valeur de la propriété change dans le composant enfant
+    - le changment n'est pas propagé dans le composant parent
+    - (Vuejs va logger un warning)
+
+--
+
+### La communication entre les composants
+#### [`Les événements`](https://vuejs.org/v2/guide/components-custom-events.html)
+
+--
+
+#### Emettre des événements depuis un Composant
+[$emit](https://vuejs.org/v2/api/#vm-emit)
+
+```html
+<html>
+    <head>
+        <script>
+            const MyComponent = {
+
+                template: `
+                    <!-- Emettre un événement sans donnée -->
+                    <button @click="$emit('my-custom-event')">
+                        Click me!
+                    </button>
+
+                    <!-- Emettre un événement avec 2 données -->
+                    <button @click="$emit('my-custom-event', 'hello', 'world')">
+                        Click me!
+                    </button>
+                `
+            };
+        </script>
+    </head>
+</html>
+```
+
+<small>Il est préconisé d'utiliser la syntaxe **kebab-case** pour nommer les événements</small>
+
+--
+
+#### Ecouter un événement depuis un composant
+
+Rien ne change...
+on utilise toujours
+[v-on](https://vuejs.org/v2/api/#v-on) !
+
+```html
+<html>
+    <head>
+        <script>
+            const MyComponent = {
+                template: `
+                    <button @click="$emit('my-custom-event', 'hi', 'you')">
+                        Click me!
+                    </button>`
+            };
+            const app = new Vue({
+                components: { 'my-component': MyComponent },
+                methods: {
+                    displayMessage: function(a, b) {
+                        console.log(`${a} ${b}!`);
+                    }
+                }
+            });
+        </script>
+    </head>
+    <body>
+        <div id="app">
+            <my-component v-on:my-custom-event="displayMessage"></my-component>
+            <my-component      my-custom-event="displayMessage"></my-component>
+        </div>
+    </body>
+</html>
+```
+
+--
+
+#### Vue globale de la communication entre les composants
+
+<img src="images/component-communication.png">
+
+--
+
+### Les slots
+
+--
+
+#### La problématique
+
+un composant générique **Contact** affiche le nom et le prénom \
+et peut afficher des propriétés "custom" \
+en fonction de son utilisation
+
+```html
+<!-- Dans certains cas, on veut afficher l'adresse-->
+<div id="contact1">
+    <input name="firstName">
+    <input name="lastName">
+    <div id="customDetails">
+        <input name="street">
+        <input name="zipCode">
+        <input name="city">
+    </div>
+</div>
+
+<!-- Dans certains cas, on veut afficher le tel/mail-->
+<div id="contact1">
+    <input name="firstName">
+    <input name="lastName">
+    <div id="customDetails">
+        <input name="tel">
+        <input name="mail">
+    </div>
+</div>
+```
+
+On fait comment ?
+
+--
+
+#### Créer un composant avec un slot
+
+```html
+<html>
+    <head>
+        <script>
+            const MyComponent = {
+
+                template: `
+                    <div id="contact1">
+
+                        <input name="firstName">
+                        <input name="lastName" >
+
+                        <div id="customDetails">
+
+                            <!-- Emplacement prévu pour le slot -->
+                            <slot></slot>
+
+                        </div>
+                    </div>
+                `
+            };
+        </script>
+    </head>
+</html>
+```
+
+--
+
+#### Utiliser un composant avec un slot
+
+```html
+<body>
+    <div id="app">
+        <my-component>
+
+            <!--
+                Les children seront créés à la place du <slot></slot>
+                de la template de my-component
+            -->
+            <input name="street" >
+            <input name="zipCode">
+            <input name="city"   >
+
+        </my-component>
+    </div>
+</body>
+```
+
+--
+
+#### Fournir une valeur par défaut pour le slot
+
+```html
+<html>
+    <head>
+        <script>
+            const MyComponent = {
+
+                template: `
+                    <div id="contact1">
+                        <input name="firstName">
+                        <input name="lastName" >
+
+                        <div id="customDetails">
+                            <!--
+                                Le slot avec une valeur par défaut
+                                (sera écrasé si contenu dans le composant parent)
+                            -->
+                            <slot>
+                                <p>No custom details to display...</p>
+                            </slot>
+                        </div>
+                    </div>
+                `
+            };
+        </script>
+    </head>
+</html>
+```
+
+--
+
+#### Définir un composant avec plusieurs slots
+[named slots](https://vuejs.org/v2/guide/components-slots.html#Named-Slots)
+
+```html
+<html>
+    <head>
+        <script>
+            const MyComponent = {
+
+                template: `
+                    <div class="container">
+                        <header>
+                            <slot name="header"></slot>
+                        </header>
+                        <main>
+                            <slot name="main"></slot>
+                        </main>
+                        <footer>
+                            <slot name="footer"></slot>
+                        </footer>
+                    </div>
+                `
+            };
+        </script>
+    </head>
+</html>
+```
+
+--
+
+#### Utiliser un composant avec plusieurs slots
+[v-slot](https://vuejs.org/v2/api/#v-slot)
+
+```html
+<base-layout>
+    <template v-slot:header>
+        <h1>Here might be a page title</h1>
+    </template>
+
+    <template v-slot:main>
+        <p>A paragraph for the main content.</p>
+        <p>And another one.</p>
+    </template>
+
+    <template v-slot:footer>
+        <p>Here's some contact info</p>
+    </template>
+</base-layout>
+```
+
+--
+
+### Le cycle de vie d'un composant (simplifié)
+[lifecycle](https://vuejs.org/v2/guide/instance.html#Lifecycle-Diagram)
+
+<img src="images/lifecycle.png">
+
+--
+
+### Définir un hook
+[hooks](https://vuejs.org/v2/api/#Options-Lifecycle-Hooks)
+
+```javascript
+const myComponent = {
+    data: function() {
+        return {
+            ...
+        }
+    },
+
+    // Les hooks sont définis directement dans le composant
+    beforeMount() {
+        ...
+    },
+
+    mounted() {
+        ...
+    },
+
+    template: '...',
+
+};
+```
+
+--
+
+### Labs
+
+<img src="images/lab.png">
+
+--
+
+### lab/03/01
+#### Application modularisée en composants
+
+```md
+- L'application (app.js) contient 3 composants
+    - catalog
+        - responsable pour afficher le catalogue
+        - responsable pour ajouter un article
+
+    - cart
+        - Responsable pour afficher les articles du panier
+        - Responsable pour supprimer un article du panier
+
+    - contact
+        - Responsable du formulaire de contact
+```
+
+--
+
+### lab/03/01
+#### Composant catalog
+
+```md
+- Passer la donnée 'categories' de app vers le composant catalog (props)
+    - Vérifier que les listes fonctionnent
+
+
+- Implémenter la fonction emitAddToCart
+    - pour émettre un événement 'add-to-cart'
+    - passer l'article à ajouter dans l'événement
+    - Modifier dans app pour écouter l'événement et appeler la fonction addToCart
+    - Vérifier avec la console que l'objet cart se rempli comme prévu
+```
+
+--
+
+### lab/03/01
+#### Composant cart
+
+```md
+- Passer la donnée 'cart' de app vers le composant cart (props)
+    - Vérifier que l'ajout / suppression au panier fonctionne
+```
+
+--
+
+### lab/03/01
+#### Composant contact
+
+```md
+- Passer la donnée 'countries' de app vers le composant contact (props)
+    - Vérifier que la liste des pays fonctionne
+
+
+- Implémenter la fonction emitContactChanged
+    - pour émettre un événement 'contact-changed'
+    - passer le contact dans l'événement
+    - Modifier dans app pour écouter l'événement et appeler la fonction onContactChanged
+    - Vérifier que le bouton Payer fonctionne
+```
+
+---
+
+## Module 04
+### mise à l'échelle
+
+--
+
+### Les limitations
+
+--
+
+### Maintenabilité des templates
+
+```html
+<html>
+    <head>
+        <script>
+            const MyComponent = {
+
+                template: `
+                    <div id="contact1">
+                        <input name="firstName">
+                        <input name="lastName" >
+                        <div id="customDetails">
+                            <div id="customDetails">
+                                <input name="tel">
+                                <input name="mail">
+                            </div>
+                        </div>
+                    </div>
+                `
+            };
+        </script>
+    </head>
+</html>
+```
+
+--
+
+### Erreurs de syntaxe
+
+```javascript
+const myData = ['a', 'b', 'c'];
+
+function sortMyData = {
+    // Oups... Uncaught ReferenceError : mydata is not defined
+    return mydata.sort();
+}
+```
+
+--
+
+### Compatibilité navigateurs
+
+```javascript
+// Ne fonctionne pas sur IE <8
+// Ne fonctionne pas sur Safari < 4
+// Fonctionne partiellement sur certains IE / Firefox / Safari
+// ...
+window.postMessage({
+    hello: 'world',
+});
+```
+
+--
+
+### Qualité de code
+
+```javascript
+// varA n'est jamais utilisée et devrait être supprimée
+const varA = 'Hi!';
+
+const varB = 'Hello!' // Il manque un point-virgule à la fin de la ligne
+
+function displayMessage() {
+    return varB.toUpperCase();
+}
+
+// Le formatage est vraiment n'importe quoi...
+    function
+mess
+ { if
+(mess
+        ) {
+console
+.log(
+                'dirty');
+}
+        else {
+console.log(
+'clean');  }    }
+```
+
+--
+
+### Optimisation navigateur
+
+```html
+<!--
+    Autant de requêtes HTTP que de scripts
+    Chaque composant est un script composé de bytes inutiles (espaces, tabulations...)
+-->
+<script src="component1.js"></script>
+<script src="component2.js"></script>
+<script src="component3.js"></script>
+<script src="component4.js"></script>
+<script src="component5.js"></script>
+<script src="component6.js"></script>
+<script src="component7.js"></script>
+<script src="component8.js"></script>
+<script src="component9.js"></script>
+<script src="component10.js"></script>
+```
+
+--
+
+#### Des outils en JavaScript pour le JavaScript
+
+Des outils existent pour outrepasser ces limitations.
+
+Ils sont tous développés en JavaScript 
+
+et fonctionnent sur [Node.js](https://nodejs.org)
+
+--
+
+### Node.js et son éco-système
+
+--
+
+#### Node.js
+[node.js](https://nodejs.org)
+
+Node.js est un environnement d'exécution
+
+qui exécute du code JavaScript en dehors d'un navigateur Web
+
+Il est basé sur le moteur V8
+
+<img src="images/nodejs_eventloop.jpg">
+
+--
+
+#### Gestionnaire de paquets
+[npm](https://www.npmjs.com/)
+
+Node.js dispose d'un gestionnaire de paquets :\
+Node Package Manager (npm)
+
+```bash
+# Install express
+npm install express
+
+# Install vue-cli
+npm install -g @vue/cli
+```
+
+--
+
+#### Descripteur de dépendances
+[package.json](https://docs.npmjs.com/files/package.json)
+
+fichier qui permet de lister les dépendances utilisées par un projet
+
+```json
+{
+    "author": "John Doe",
+    "license": "MIT",
+    "name": "my-project",
+    "description": "A sample Node.js app",
+    "version": "1.0.0",
+    "main": "index.js",
+
+    "dependencies": {
+        "express": "^4.17.1"
+    },
+
+    "devDependencies": {
+        "@vue/cli": "^4.3.1"
+    }
+  }
+}
+```
+
+```bash
+# Exécuter npm sur un dossier qui contient un package.json
+# va installer toutes les dépendances
+# dans un dossier node_modules/
+npm install
+```
+
+--
+
+### [Babel](https://babeljs.io/)
+
+<img src="images/babel.png" style="height: 200px;">
+
+--
+
+#### Qu'est-ce que Babel ?
+
+Un transpiler : transforme du code Source en... code Source !
+
+<br><br>
+
+Babel permet \
+de coder avec les dernières fonctionnalités JS (ES2015 et +) \
+et d'obtenir un code utilisable sur tous les navigateurs souhaités !
+
+```javascript
+// Exemple : un code utilisant une fonction fléchée (ES2015)
+[1, 2, 3].map((n) => n + 1);
+
+// Exemple de code transpilé par Babel (ES5)
+[1, 2, 3].map(function(n) {
+  return n + 1;
+});
+```
+
+--
+
+### [Webpack](https://webpack.js.org/)
+
+<img src="images/webpack.png" style="height: 200px;">
+
+--
+
+#### Qu'est-ce que Webpack ?
+
+Un bundler : il assemble et optimise les ressources statiques
+
+<br><br>
+
+--
+
+### [Eslint](https://eslint.org/)
+
+<img src="images/eslint.png" style="height: 200px;">
+
+--
+
+#### Qu'est-ce que Eslint ?
+
+TODO
+
+<br><br>
+
+--
+
+### [Vue CLI](https://cli.vuejs.org/)
+
+--
+
+#### Qu'est-ce que Vue CLI ?
+
+Un outil en ligne de commandes \
+(Command Line Interface)
+
+pour créer un nouveau projet \
+en répondant à quelques questions \
+ (boilerplate)
+
+<img src="images/vue-cli.png">
+
+--
+
+#### Installer Vue CLI
+
+```bash
+# l'option -g permet d'installer le module en global
+# Il va être ajouté au PATH de l'utilisateur
+# Et sera utilisable depuis n'importe où
+npm install -g @vue/cli
+```
+
+--
+
+#### Créer un nouveau projet avec Vue CLI
+
+```bash
+vue create hello-world
 ```
