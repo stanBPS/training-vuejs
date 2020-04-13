@@ -1,2 +1,8 @@
 lab_correction/**/*.js
 lab_correction/**/*.html
+lab_correction/**/*.vue
+lab_correction/**/*.json
+lab_correction/**/*.png
+lab_correction/**/*.jpg
+
+**/node_modules/

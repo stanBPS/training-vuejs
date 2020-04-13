@@ -10,6 +10,14 @@ title: "Vue.js"
 
 ---
 
+<!-- Add .vue highlighting-->
+<script src="https://cdn.jsdelivr.net/npm/highlightjs"></script>
+<script src="https://cdn.jsdelivr.net/npm/highlightjs-vue"></script>
+<script>
+  hljs.registerLanguage("vue", window.hljsDefineVue);
+  hljs.initHighlightingOnLoad();
+</script>
+
 # Vue.js
 
 <img src="images/vuejs_logo.png" style="height: 200px">
@@ -24,8 +32,7 @@ title: "Vue.js"
 | 02        | Les Bindings et les interactions utilisateur | 1h      | 1h     |
 | 03        | Les composants                               | 1h      | 1h     |
 | 04        | Mise à l'échelle                             | 1h      | 1h     |
-| 05        | La navigation et la gestion d'état           | 1h      | 0h     |
-| 06        | Les tests                                    | 1h      | 0h     |
+| 05        | La navigation et les tests                   | 1h      | 1h     |
 | **Total** |                                              | **5h**  | **5h** |
 
 ---
@@ -2178,28 +2185,23 @@ const myComponent = {
 
 ### Maintenabilité des templates
 
-```html
-<html>
-    <head>
-        <script>
-            const MyComponent = {
+```javascript
+const MyComponent = {
 
-                template: `
-                    <div id="contact1">
-                        <input name="firstName">
-                        <input name="lastName" >
-                        <div id="customDetails">
-                            <div id="customDetails">
-                                <input name="tel">
-                                <input name="mail">
-                            </div>
-                        </div>
-                    </div>
-                `
-            };
-        </script>
-    </head>
-</html>
+    template: `
+        <div id="contact1">
+            <input name="firstName">
+            <input name="lastName" >
+            <div id="customDetails">
+                <div id="customDetails">
+                    <input name="tel">
+                    <input name="mail">
+                </div>
+            </div>
+        </div>
+    `
+};
+
 ```
 
 --
@@ -2210,6 +2212,7 @@ const myComponent = {
 const myData = ['a', 'b', 'c'];
 
 function sortMyData = {
+
     // Oups... Uncaught ReferenceError : mydata is not defined
     return mydata.sort();
 }
@@ -2223,7 +2226,7 @@ function sortMyData = {
 // Ne fonctionne pas sur IE <8
 // Ne fonctionne pas sur Safari < 4
 // Fonctionne partiellement sur certains IE / Firefox / Safari
-// ...
+// ... :(
 window.postMessage({
     hello: 'world',
 });
@@ -2243,7 +2246,7 @@ function displayMessage() {
     return varB.toUpperCase();
 }
 
-// Le formatage est vraiment n'importe quoi...
+// Un formatage ni fait ni à faire...
     function
 mess
  { if
@@ -2283,8 +2286,9 @@ console.log(
 
 #### Des outils en JavaScript pour le JavaScript
 
-Des outils existent pour outrepasser ces limitations.
+Des outils existent pour palier ces limitations
 
+<br><br>
 Ils sont tous développés en JavaScript 
 
 et fonctionnent sur [Node.js](https://nodejs.org)
@@ -2295,12 +2299,11 @@ et fonctionnent sur [Node.js](https://nodejs.org)
 
 --
 
-#### Node.js
-[node.js](https://nodejs.org)
+#### Qu'est-ce que Node.js ?
 
-Node.js est un environnement d'exécution
-
-qui exécute du code JavaScript en dehors d'un navigateur Web
+[Node.js](https://nodejs.org)
+est un environnement d'exécution JavaScript \
+en dehors d'un navigateur Web
 
 Il est basé sur le moteur V8
 
@@ -2311,7 +2314,7 @@ Il est basé sur le moteur V8
 #### Gestionnaire de paquets
 [npm](https://www.npmjs.com/)
 
-Node.js dispose d'un gestionnaire de paquets :\
+Node.js inclut un gestionnaire de paquets :\
 Node Package Manager (npm)
 
 ```bash
@@ -2327,7 +2330,7 @@ npm install -g @vue/cli
 #### Descripteur de dépendances
 [package.json](https://docs.npmjs.com/files/package.json)
 
-fichier qui permet de lister les dépendances utilisées par un projet
+permet de lister les dépendances utilisées par un projet
 
 ```json
 {
@@ -2350,11 +2353,29 @@ fichier qui permet de lister les dépendances utilisées par un projet
 ```
 
 ```bash
-# Exécuter npm sur un dossier qui contient un package.json
-# va installer toutes les dépendances
-# dans un dossier node_modules/
+# Exécuter npm sur un dossier qui contient un fichier package.json
+# Cela va installer toutes les dépendances dans un dossier node_modules/
 npm install
 ```
+
+--
+
+### [Eslint](https://eslint.org/)
+
+<img src="images/eslint.png" style="height: 200px;">
+
+--
+
+#### Qu'est-ce que Eslint ?
+
+Un **linter** de code JavaScript
+
+Analyse le code de manière statique (pas d'exécution) \
+pour vérifier l'application de règles de codage
+
+Intégré dans les principaux IDE
+
+<img src="images/eslint.gif" style="height: 350px;">
 
 --
 
@@ -2375,10 +2396,10 @@ de coder avec les dernières fonctionnalités JS (ES2015 et +) \
 et d'obtenir un code utilisable sur tous les navigateurs souhaités !
 
 ```javascript
-// Exemple : un code utilisant une fonction fléchée (ES2015)
+// Exemple : un code utilisant une fonction fléchée     (ES2015)
 [1, 2, 3].map((n) => n + 1);
 
-// Exemple de code transpilé par Babel (ES5)
+// L'équivalent après transpilation par Babel           (ES5)
 [1, 2, 3].map(function(n) {
   return n + 1;
 });
@@ -2394,27 +2415,73 @@ et d'obtenir un code utilisable sur tous les navigateurs souhaités !
 
 #### Qu'est-ce que Webpack ?
 
-Un bundler : il assemble et optimise les ressources statiques
+Un bundler : il assemble et optimise les ressources statiques:
+- Elimination de code mort
+- Minification du code JavaScript
+- Minification des feuilles de style CSS
+- Création des Source Maps
+- ...
 
-<br><br>
+<img src="images/webpack_bundle.jpg" style="height: 350px;">
 
 --
 
-### [Eslint](https://eslint.org/)
+### [Vue-loader](https://github.com/vuejs/vue-loader)
 
-<img src="images/eslint.png" style="height: 200px;">
+<img src="images/vuejs_logo.png" style="height: 200px;">
 
 --
 
-#### Qu'est-ce que Eslint ?
+#### Qu'est-ce que Vue-loader ?
 
-TODO
+Un loader **Webpack**
 
 <br><br>
+qui permet de transformer
+
+des fichiers **.vue** en fichiers **.js** et  **.css**
+
+--
+
+#### Qu'est-ce qu'un fichier .vue ?
+
+Un format permettant d'écrire un composant dans un seul fichier
+
+```vue
+<template>
+    <div>
+        <p> {{ greeting }} World!</p>
+        <other-component></other-component>
+    </div>
+</template>
+
+<script>
+    import OtherComponent from './OtherComponent.vue'
+
+    export default {
+        components: {
+            OtherComponent
+        },
+        data () {
+            return {
+                greeting: 'Hello'
+            }
+        }
+    }
+</script>
+
+<style>
+    p {
+        font-size: 2em;
+    }
+</style>
+```
 
 --
 
 ### [Vue CLI](https://cli.vuejs.org/)
+
+<img src="images/vuejs_logo.png" style="height: 200px;">
 
 --
 
@@ -2447,3 +2514,205 @@ npm install -g @vue/cli
 ```bash
 vue create hello-world
 ```
+
+--
+
+### Les Composants .vue
+
+--
+
+#### Créer un composant .vue
+[export](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Instructions/export)
+
+```vue
+<!-- exemple de fichier hello.vue -->
+
+<!-- template contient la template html du composant -->
+<template>
+    <div>
+        <p> {{ greeting }} World!</p>
+    </div>
+</template>
+
+<!-- script contient le code JS du composant -->
+<script>
+
+    // Tout le code JS est "exporté"
+    // pour pouvoir être   "importé" par d'autres composants
+    export default {
+        data () {
+            return {
+                greeting: 'Hello';
+            }
+        }
+    }
+</script>
+
+<!-- style contient la CSS du composant -->
+<style>
+    p {
+        font-size: 2em;
+    }
+</style>
+```
+
+--
+
+#### Utiliser un composant .vue
+[import](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Instructions/import)
+
+```vue
+<!-- exemple de fichier app.vue souhaitant utiliser le composant hello.vue -->
+<template>
+    <div>
+        <!-- Utilisation du composant HelloWorld (Attention ! kebab-case !) -->
+        <hello-world></hello-world>
+    </div>
+</template>
+
+<script>
+
+    // Le composant HelloWorld.vue est importé
+    import HelloWorld from './HelloWorld.vue';
+
+    export default {
+        components: {
+
+            // Le composant HelloWorld est référencé en tant que sous-composant
+            HelloWorld,
+
+        },
+    }
+</script>
+```
+
+--
+
+### Labs
+
+<img src="images/lab.png">
+
+--
+
+### lab/04/01
+#### Installer L'environnement Node.js
+
+```md
+1. Installer node.js (https://nodejs.org/en/)
+
+
+2. Tester en exécutant la commande `node -v`
+
+
+3. Tester la console nodejs
+    - Exécuter la commande `node`
+    - Puis dans la console node, exécuter `console.log('Coucou !')`
+    - Pour quitter appuyer sur `CTRL+D`
+```
+
+--
+
+### lab/04/02
+#### Installer vue-cli
+
+```md
+1. Vérifier que npm fonctionne
+    - `npm -v`
+
+
+2. Installer vue-CLI en global
+    - `npm install -g @vue/cli`
+
+
+3. Tester que le CLI fonctionne
+    - `vue -V`
+```
+
+--
+
+### lab/04/03
+#### Créer une nouvelle application
+
+```md
+1. Ouvrir un terminal sous lab/04
+
+
+2. Créer une nouvelle application "hello" avec vue-CLI
+    - `vue create hello`
+    - default (babel,eslint)
+    - ENTREE
+
+
+3. Déplacer vous sous le répertoire `lab/04/hello` nouvellement créé et exécuter
+    - `npm run serve`
+
+
+4. Ouvrir dans le navigateur l'application Vue créée
+    - http://localhost:8080
+```
+
+--
+
+### lab/04/04
+#### Ajouter un composant Chuck Norris
+
+```md
+1. Sous lab/04/hello/src/components
+    - Créer un composant ChuckNorris.vue
+    - Dans la partie <template>
+            <div>
+                <h2>Chuck Norris fact...</h2>
+            </div>
+
+
+2. Dans lab/04/hello/src/App.vue
+    - Importer le composant ChuckNorris.vue
+    - Référencer le composant en tant que sous-composant de app
+    - Insérer le composant <chuck-norris /> au dessus du composant <HelloWorld>
+
+
+3. Vérifier que cela fonctionne
+    - vue-serve doit afficher `Compiled successfully in ...ms`
+    - rafraichir le navigateur et vérifier que Chuck Norris s'affiche
+
+--
+
+### lab/04/05
+#### Implémenter le composant Chuck Norris
+
+```md
+1. Copier le fichier lab/04/facts.js 
+    - sous lab/04/hello/src/facts.js
+
+
+2. Copier le fichier lab/04/chuck_norris.jpg
+    - sous lab/04/hello/src/assets/chuck_norris.jpg
+
+
+3. Importer les facts dans app.vue
+    - `import facts from "./facts";`
+
+
+3. Modifier pour passer les facts au composant ChuckNorris
+    - passer les facts sous forme de `props` de app vers ChuckNorris
+
+
+4. Modifier le composant ChuckNorris pour afficher un fact au hasard
+    - Utiliser le hook `created`
+        - prendre un fact au hasard :
+        - `this.facts[Math.floor(Math.random() * this.facts.length)]`
+    - Afficher le fact et l'image de Chuck Norris
+    <div>
+        <img src="../assets/chuck_norris.jpg" />
+        <br>
+        <h2>{{ fact }}</h2>
+    </div>
+
+
+5. Supprimer le composant HelloWorld de la page
+
+---
+
+### The end
+
+<img src="images/questions.jpg" style="height:400px;">

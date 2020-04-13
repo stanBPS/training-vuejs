@@ -1,0 +1,3246 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+
+  <title>Vue.js</title>
+
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <!-- REVEAL CSS-->
+  <link rel="stylesheet" href="libs/reveal.js/font-awesome-4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="libs/reveal.js/3.8.0/css/reveal.css">
+  
+  <link rel="stylesheet" href="libs/reveal.js/3.8.0/css/theme/night.css" id="theme">
+  
+  
+  <link rel="stylesheet" href="libs/reveal.js/3.8.0/plugin/title-footer/title-footer-mod.css" />
+
+  <!-- MERMAID-->
+  <script src="libs/reveal.js/3.8.0/plugin/mermaid/mermaid.min.js"></script>
+  <style>
+  .mermaid {
+    font-size: 0.5em;
+  }
+  </style>
+
+  <style>
+    [class*=task-list-item] {
+    min-height: 22px;
+    margin-top: 6px!important;
+    margin-bottom: 6px!important;
+    padding-left: 0;
+    list-style: none;
+}
+
+[class*=task-list-item]>input:first-child {
+    position: absolute!important;
+    opacity: 0;
+    margin: 0;
+}
+[class*=task-list-item]>label {
+    padding-left: 29px!important;
+    min-height: 22px;
+    line-height: 22px;
+    display: inline-block;
+    position: relative;
+    vertical-align: top;
+    margin-bottom: 0;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+.task-list-item>input:first-child:checked+input[type=hidden]+label::before, .task-list-item>input:first-child:checked+label::before {
+    background-color: #ecf0f1;
+    border-color: #ecf0f1;
+}
+
+[class*=task-list-item]>input:first-child+input[type=hidden]+label::before, [class*=task-list-item]>input:first-child+label::before {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    border: 1px solid #D3CFC8;
+    border-radius: 0;
+    margin-left: -29px;
+}
+
+
+[class*=task-list-item]>input:first-child:checked+input[type=hidden]+label::after, [class*=task-list-item]>input:first-child:checked+label::after {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 7px;
+    height: 10px;
+    border: 2px solid #fff;
+    border-left: none;
+    border-top: none;
+    transform: translate(7.75px,4.5px) rotate(45deg);
+    -ms-transform: translate(7.75px,4.5px) rotate(45deg);
+}
+
+
+.task-list-item>input:first-child:checked+input[type=hidden]+label::after, .task-list-item>input:first-child:checked+label::after {
+    border-bottom-color: #95a5a6;
+    border-right-color: #95a5a6;
+}
+  </style>
+
+  <!-- Theme used for syntax highlighting of code -->
+  
+  <link rel="stylesheet" href="libs/highlight.js/9.12.0/monokai.css">
+  
+
+  
+  <link rel="stylesheet" href="custom.css">
+  
+  
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match(/print-pdf/gi) ? 'libs/reveal.js/3.8.0/css/print/pdf.css' : 'libs/reveal.js/3.8.0/css/print/paper.css';
+    document.getElementsByTagName('head')[0].appendChild(link);
+  </script>
+
+  <style>
+    /* Solarized Light theme */
+     .line {
+      display: block;
+    }
+    
+
+    .line.focus {
+      background: #fdf6e3;
+      color: #657b83;
+    }
+
+/*
+    .line.focus .hljs-comment,
+    .line.focus .hljs-quote {
+      color: #93a1a1;
+    }
+
+    .line.focus .hljs-keyword,
+    .line.focus .hljs-selector-tag,
+    .line.focus .hljs-addition {
+      color: #859900;
+    }
+
+    .line.focus .hljs-number,
+    .line.focus .hljs-string,
+    .line.focus .hljs-meta .hljs-meta-string,
+    .line.focus .hljs-literal,
+    .line.focus .hljs-doctag,
+    .line.focus .hljs-regexp {
+      color: #2aa198;
+    }
+
+    .line.focus .hljs-title,
+    .line.focus .hljs-section,
+    .line.focus .hljs-name,
+    .line.focus .hljs-selector-id,
+    .line.focus .hljs-selector-class {
+      color: #268bd2;
+    }
+
+    .line.focus .hljs-attribute,
+    .line.focus .hljs-attr,
+    .line.focus .hljs-variable,
+    .line.focus .hljs-template-variable,
+    .line.focus .hljs-class .hljs-title,
+    .line.focus .hljs-type {
+      color: #b58900;
+    }
+
+    .line.focus .hljs-symbol,
+    .line.focus .hljs-bullet,
+    .line.focus .hljs-subst,
+    .line.focus .hljs-meta,
+    .line.focus .hljs-meta .hljs-keyword,
+    .line.focus .hljs-selector-attr,
+    .line.focus .hljs-selector-pseudo,
+    .line.focus .hljs-link {
+      color: #cb4b16;
+    }
+
+    .line.focus .hljs-built_in,
+    .line.focus .hljs-deletion {
+      color: #dc322f;
+    }
+
+    .line.focus .hljs-formula {
+      background: #eee8d5;
+    }
+
+    .line.focus .hljs-emphasis {
+      font-style: italic;
+    }
+
+    .line.focus .hljs-strong {
+      font-weight: bold;
+    }
+
+    .yellow-slide .line.focus:nth-child(2) {
+      background: yellow;
+    }
+
+    .reveal .slides section .code-presenting-annotation {
+      font-size: 70%;
+    }
+    */
+
+    .reveal .slides section .fragment.current-only {
+      visibility: visible;
+      display: none;
+    }
+
+    .reveal .slides section .fragment.current-only.current-fragment {
+      display: block;
+    }
+
+/*
+    .line {
+      display: block;
+    }
+*/
+    .line.focus {
+       opacity: 1.0;
+    } 
+
+    /* .hljs {
+      background: none;
+    } */
+
+    /* .reveal pre {
+      width: 98%;
+      margin: 0px;
+      box-shadow: none;
+    }
+
+    .reveal pre code {
+      font-size: 1.2em;
+      line-height: 1.2;
+      border-radius: 10px;
+      max-height: 60vh !important;
+      overflow: hidden !important;
+    } */
+
+    @media (device-width: 100vw) and (device-height: 100vh) {
+      .reveal pre code {
+        max-height: 50vh !important;
+      }
+    }
+
+    #logo img {
+      max-height: 3.5em;
+      max-width: none;
+      min-width: 50px;
+    }
+
+    .reveal .slides section .code-presenting-annotation {
+      color: white;
+      background: black;
+      padding: 0px 15px;
+      border-radius: 15px;
+      opacity: 0.75 !important;
+      font-size: 50% !important;
+    }
+  </style>
+  <script>
+    if (window.location.search.match(/print-pdf-now/gi)) {
+      window.print();
+    }
+  </script>
+</head>
+
+<body>
+  
+<div id="logo" style="position: fixed; top: 20px; left: 20px; z-index: 1">
+    <img src="images/vuejs_logo.png" />
+</div>
+
+
+  <div class="reveal">
+
+    <!-- Any section element inside of this container is displayed as a slide -->
+    <div class="slides">
+
+      
+
+
+    
+    <section>
+        <section >
+            <!-- Add .vue highlighting-->
+<script src="https://cdn.jsdelivr.net/npm/highlightjs"></script>
+<script src="https://cdn.jsdelivr.net/npm/highlightjs-vue"></script>
+<script>
+  hljs.registerLanguage("vue", window.hljsDefineVue);
+  hljs.initHighlightingOnLoad();
+</script>
+<h1><a id="user-content-vuejs" class="anchor" href="#vuejs" aria-hidden="true"></a>Vue.js</h1>
+<img src="images/vuejs_logo.png" style="height: 200px">
+            </section>
+        
+            <section >
+                <h2><a id="user-content-plan" class="anchor" href="#plan" aria-hidden="true"></a>Plan</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th>Module</th>
+<th style="text-align:center">Cours</th>
+<th style="text-align:center">TD</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">01</td>
+<td>Introduction</td>
+<td style="text-align:center">1h</td>
+<td style="text-align:center">1h</td>
+</tr>
+<tr>
+<td style="text-align:center">02</td>
+<td>Les Bindings et les interactions utilisateur</td>
+<td style="text-align:center">1h</td>
+<td style="text-align:center">1h</td>
+</tr>
+<tr>
+<td style="text-align:center">03</td>
+<td>Les composants</td>
+<td style="text-align:center">1h</td>
+<td style="text-align:center">1h</td>
+</tr>
+<tr>
+<td style="text-align:center">04</td>
+<td>Mise à l’échelle</td>
+<td style="text-align:center">1h</td>
+<td style="text-align:center">1h</td>
+</tr>
+<tr>
+<td style="text-align:center">05</td>
+<td>La navigation et les tests</td>
+<td style="text-align:center">1h</td>
+<td style="text-align:center">1h</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>Total</strong></td>
+<td></td>
+<td style="text-align:center"><strong>5h</strong></td>
+<td style="text-align:center"><strong>5h</strong></td>
+</tr>
+</tbody>
+</table>
+
+            </section>
+        
+
+    </section>
+    
+
+
+
+    
+    <section>
+        <section >
+            <h2><a id="user-content-module-01" class="anchor" href="#module-01" aria-hidden="true"></a>Module 01</h2>
+<h3><a id="user-content-introduction" class="anchor" href="#introduction" aria-hidden="true"></a>Introduction</h3>
+
+            </section>
+        
+            <section >
+                <h3><a id="user-content-quelques-définitions" class="anchor" href="#quelques-définitions" aria-hidden="true"></a>Quelques définitions…</h3>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-javascript" class="anchor" href="#javascript" aria-hidden="true"></a>JavaScript</h4>
+<img src="images/javascript_logo.png" style="height:75px;">
+<p>Un langage de programmation principalement pour le navigateur</p>
+<p><small>Mais ça, vous le savez déjà !</small>
+<br>
+<small>;)</small></p>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-les-bibliothèques-de-code" class="anchor" href="#les-bibliothèques-de-code" aria-hidden="true"></a>Les bibliothèques de code</h4>
+<p><a href="https://en.wikipedia.org/wiki/Library_(computing)">library</a></p>
+<p>Un ensemble de fonctions d’un domaine fonctionnel particulier</p>
+<p>pour gagner du temps et éviter de “réinventer la roue”</p>
+<ul>
+<li>Une librairie de gestion du temps (dates, heures, fuseaux…)</li>
+<li>Une librairie pour envoyer des mails</li>
+<li>Une librairie pour représenter de jolis graphiques…</li>
+</ul>
+<img src="images/wheel.png" style="height: 350px;">
+            </section>
+        
+            <section >
+                <h4><a id="user-content-les-frameworks" class="anchor" href="#les-frameworks" aria-hidden="true"></a>Les Frameworks</h4>
+<p><a href="https://en.wikipedia.org/wiki/Software_framework">framework</a></p>
+<p>Un cadre pour développer de manière structurée <br>
+(homogénéité, bonnes pratiques…) :</p>
+<ul>
+<li>Un framework de devéloppement d’applications web</li>
+<li>Un framework de devéloppement d’applications mobile</li>
+<li>…</li>
+</ul>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-quelle-différence-entre-une-librairie-et-un-framework-" class="anchor" href="#quelle-différence-entre-une-librairie-et-un-framework-" aria-hidden="true"></a>Quelle différence entre une librairie et un framework ?</h4>
+<p>Le code de votre application <strong>appelle</strong> les fonctions d’une librairie</p>
+<p>Le code de votre application <strong>est appelé</strong> par le framework</p>
+<img src="images/lib_framework.png" style="height: 200px;">
+            </section>
+        
+            <section >
+                <h4><a id="user-content-applications-web-mono-pages-" class="anchor" href="#applications-web-mono-pages-" aria-hidden="true"></a>Applications Web Mono Pages ?</h4>
+<p><a href="https://en.wikipedia.org/wiki/Single-page_application">Single Page Application</a></p>
+<p>1 seule page Web est chargée dans le navigateur</p>
+<p>dynamiquement réécrite en fonction des interactions utilisateur</p>
+<ul>
+<li>
+<p>Exemples d’applications “classique” :</p>
+<ul>
+<li><a href="https://www.amazon.fr">Amazon</a></li>
+<li><a href="https://www.lemonde.fr">Lemonde</a></li>
+</ul>
+</li>
+<li>
+<p>Exemples d’applications “SPA” :</p>
+<ul>
+<li>Cette magnifique présentation :)</li>
+<li><a href="https://mail.google.com">Gmail</a></li>
+<li><a href="https://twitter.com">Twitter</a></li>
+<li><a href="https://www.deezer.com">Deezer</a></li>
+</ul>
+</li>
+</ul>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-open-source-" class="anchor" href="#open-source-" aria-hidden="true"></a>Open-Source ?</h4>
+<p>Logiciels dont la licence permet :</p>
+<ul>
+<li>
+<p>La libre redistribution</p>
+</li>
+<li>
+<p>L’accès au code source</p>
+</li>
+<li>
+<p>La création de travaux dérivés (fork)</p>
+</li>
+</ul>
+<br>
+<img src="images/opensource.png" style="height: 150px;">
+            </section>
+        
+            <section >
+                <h3><a id="user-content-vuejs-" class="anchor" href="#vuejs-" aria-hidden="true"></a>Vue.js ?</h3>
+<p><br><br><br></p>
+<p><small>Ca se prononce “View”</small>
+<br>
+<small>;)</small></p>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-en-une-longue-phrase-" class="anchor" href="#en-une-longue-phrase-" aria-hidden="true"></a>En une (longue) phrase ?</h4>
+<img src="images/vuejs_logo.png" style="height: 100px;">
+<p>Un projet <a href="https://www.w3.org/standards/webdesign/script.html">JavaScript</a>
+<a href="https://opensource.org/">Open-Source</a></p>
+<p>qui peut être utilisé</p>
+<p>comme une simple <a href="https://en.wikipedia.org/wiki/Library_(computing)">librarie</a>
+ou un <a href="https://en.wikipedia.org/wiki/Software_framework">framework</a> complet</p>
+<p>pour construire des <a href="https://en.wikipedia.org/wiki/Single-page_application">Applications Web Monopages</a></p>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-historique" class="anchor" href="#historique" aria-hidden="true"></a>Historique</h4>
+<p>Créé en 2014
+par <a href="https://evanyou.me/">Evan You</a></p>
+<img src="images/evan_you.jfif" style="height: 150px">
+<p>Après avoir utilisé <a href="https://angularjs.org/">Angular.js</a>
+chez Google</p>
+<blockquote>
+<p>“What if I could just extract the part that I really like about Angular
+and build something really lightweight…”</p>
+</blockquote>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-qui-dautre--tendance-perso-2020" class="anchor" href="#qui-dautre--tendance-perso-2020" aria-hidden="true"></a>Qui d’autre ? <small>Tendance (perso) 2020…</small></h4>
+<img src="images/web.png">
+<p><a href="https://reactjs.org/">React.js</a>
+<a href="https://vuejs.org/">Vue.js</a>
+<a href="https://svelte.dev/">Svelte</a><small>NEW!</small>
+<a href="https://angular.io/">Angular</a></p>
+<img src="images/comic_stack.jpg" style="height: 420px">
+            </section>
+        
+            <section >
+                <h3><a id="user-content-concepts-principaux" class="anchor" href="#concepts-principaux" aria-hidden="true"></a>Concepts principaux</h3>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-model---view---viewmodel" class="anchor" href="#model---view---viewmodel" aria-hidden="true"></a>Model - View - ViewModel</h4>
+<p><a href="https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel">MVVM</a></p>
+<p>Architecture qui permet de séparer</p>
+<ul>
+<li>
+<p>La <strong>vue</strong> (interface Graphique)</p>
+</li>
+<li>
+<p>Du <strong>modèle</strong> (les données et leur manipulation : DB, API…)</p>
+</li>
+<li>
+<p>Le “ViewModel” assure la glue entre les 2 via du “data-binding”</p>
+</li>
+</ul>
+<img src="images/mvvm.png" style="height: 100px;">
+            </section>
+        
+            <section >
+                <h4><a id="user-content-composant-graphique" class="anchor" href="#composant-graphique" aria-hidden="true"></a>Composant Graphique</h4>
+<br>
+<p>Permet de diviser l’<strong>Interface Graphique</strong></p>
+<p>en éléments <strong>indépendants</strong> et <strong>réutilisables</strong></p>
+<br>
+<p>Permet de concevoir chaque élément de manière <strong>isolée</strong></p>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-composition--exemple" class="anchor" href="#composition--exemple" aria-hidden="true"></a>Composition : exemple</h4>
+<img src="images/component_layout.png">
+            </section>
+        
+            <section >
+                <h4><a id="user-content-dom-virtuel--la-problématique" class="anchor" href="#dom-virtuel--la-problématique" aria-hidden="true"></a>DOM virtuel : la problématique</h4>
+<p>Avec le data-binding, chaque changement d’état <br>
+provoque une cascade d’appels à l’API du DOM</p>
+<img src="images/tree.png" style="height: 200px;">
+<pre><code class="language-javascript">document.getElementsByClassName(&quot;list__item&quot;)[0].textContent = &quot;List item one&quot;;
+const listItemTwo = document.createElement(&quot;li&quot;);
+listItemTwo.classList.add(&quot;list__item&quot;);
+listItemTwo.textContent = &quot;List item two&quot;;
+document.getElementsByClassName(&quot;list&quot;)[0].appendChild(listItemTwo);
+</code></pre>
+<p>Ces appels sont couteux et beaucoup d’entre eux sont inutiles</p>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-dom-virtuel--quest-ce-que-cest-" class="anchor" href="#dom-virtuel--quest-ce-que-cest-" aria-hidden="true"></a>DOM virtuel : qu’est-ce que c’est ?</h4>
+<p>Une copie en mémoire du véritable DOM</p>
+<p>Lors des changements d’état, seul le DOM virtuel est muté</p>
+<p>La différence entre les 2 DOMs est calculée et appliquée en 1 fois au véritable DOM</p>
+<img src="images/virtual_dom_diff.png" style="height: 380px;">
+            </section>
+        
+            <section >
+                <h3><a id="user-content-démarrage" class="anchor" href="#démarrage" aria-hidden="true"></a>Démarrage</h3>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-inclure-la-librairie-vuejs-dans-une-page-web" class="anchor" href="#inclure-la-librairie-vuejs-dans-une-page-web" aria-hidden="true"></a>Inclure la librairie Vue.js dans une page Web</h4>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+
+    &lt;head&gt;
+
+        &lt;!-- Dev version --&gt;
+        &lt;script src=&quot;https://cdn.jsdelivr.net/npm/vue/dist/vue.js&quot;&gt;&lt;/script&gt;
+
+        &lt;!-- Or optimized prod version --&gt;
+        &lt;script src=&quot;https://cdn.jsdelivr.net/npm/vue&quot;&gt;&lt;/script&gt;
+
+    &lt;/head&gt;
+
+    &lt;body&gt;&lt;/body&gt;
+
+&lt;/html&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-instancier-vuejs" class="anchor" href="#instancier-vuejs" aria-hidden="true"></a>Instancier Vue.js</h4>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+
+    &lt;head&gt;
+
+        &lt;script&gt;
+
+            const app = new Vue({
+
+                // Selecteur CSS indiquant l'élément auquel attacher l'application
+                el: '#myFirstVueApp'
+
+            });
+        &lt;/script&gt;
+
+    &lt;/head&gt;
+
+    &lt;body&gt;
+
+        &lt;h2&gt;Ma 1ère app vue.js&lt;/h2&gt;
+
+        &lt;div id=&quot;myFirstVueApp&quot;&gt;&lt;/div&gt;
+
+    &lt;/body&gt;
+
+&lt;/html&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-ajouter-de-la-donnée" class="anchor" href="#ajouter-de-la-donnée" aria-hidden="true"></a>Ajouter de la donnée</h4>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;script&gt;
+            const app = new Vue({
+                el: '#myFirstVueApp',
+                data: {
+                    message: 'Hello world!',
+                }
+            });
+        &lt;/script&gt;
+
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;h2&gt;Ma 1ère app vue.js&lt;/h2&gt;
+        &lt;div id=&quot;myFirstVueApp&quot;&gt;
+
+            &lt;!-- 
+                Vue.js utilise un language de template
+                pour remplacer {{ }} par le contenu au runtime
+            --&gt;
+            {{ message }}
+
+        &lt;/div&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h3><a id="user-content-lécosystème-vuejs" class="anchor" href="#lécosystème-vuejs" aria-hidden="true"></a>L’écosystème Vue.js</h3>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-deboguage" class="anchor" href="#deboguage" aria-hidden="true"></a>Deboguage</h4>
+<p><a href="https://github.com/vuejs/vue-devtools">vue-devtools</a></p>
+<p>Extension navigateur (Chrome, Firefox) <br>
+pour faciliter le deboguage</p>
+<img src="images/devtools.png" style="height: 400px;">
+            </section>
+        
+            <section >
+                <h4><a id="user-content-création-dun-nouveau-projet" class="anchor" href="#création-dun-nouveau-projet" aria-hidden="true"></a>Création d’un nouveau projet</h4>
+<p><a href="https://cli.vuejs.org/">vue-cli</a></p>
+<p>Outil (CLI) qui propose aussi une interface graphique</p>
+<pre><code class="language-bash">npm install -g @vue/cli
+
+# Créer une nouvelle appli en ligne de commande
+vue create my-awesome-vue-app
+
+# Créer une nouvelle appli via l'interface graphique
+vue ui
+</code></pre>
+<img src="images/vue-cli-ui.png" style="height: 350px;">
+            </section>
+        
+            <section >
+                <h4><a id="user-content-gestion-des-composants-au-format-vue" class="anchor" href="#gestion-des-composants-au-format-vue" aria-hidden="true"></a>Gestion des composants au format <code>.vue</code></h4>
+<p><a href="https://vue-loader.vuejs.org/">vue-loader</a></p>
+<p>Permet de transformer des fichiers .vue en code JavaScript interprétable par le navigateur</p>
+<pre><code class="language-html">&lt;!-- Exemple de composant myComponent.vue --&gt;
+
+&lt;!-- Template du composant --&gt;
+&lt;template&gt;
+    &lt;div class=&quot;example&quot;&gt;{{ msg }}&lt;/div&gt;
+&lt;/template&gt;
+
+&lt;!-- Code JavaScript du composant --&gt;
+&lt;script&gt;
+    export default {
+        data () {
+            return {
+                msg: 'Hello world!'
+            }
+        }
+    }
+&lt;/script&gt;
+
+&lt;!-- Style du composant --&gt;
+&lt;style&gt;
+    .example {
+        color: red;
+    }
+&lt;/style&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h3><a id="user-content-linterpolation" class="anchor" href="#linterpolation" aria-hidden="true"></a>L’interpolation</h3>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-syntaxe-moustache" class="anchor" href="#syntaxe-moustache" aria-hidden="true"></a>Syntaxe “Moustache”</h4>
+<p><a href="https://vuejs.org/v2/guide/syntax.html#Interpolations">{{ }}</a></p>
+<pre><code class="language-html">&lt;script&gt;
+    const app = new Vue({
+        el: '#myFirstVueApp',
+        data: {
+            now: undefined,
+        },
+    });
+
+    // Met à jour la variable now toutes les secondes
+    setInterval(() =&gt; app.$data.now = new Date().toString(), 1000)
+
+&lt;/script&gt;
+
+&lt;div id=&quot;app&quot;&gt;
+
+    &lt;!--
+        effectue un binding directionnel entre
+            - l'expression JavaScript
+            - son rendu dans la page sous forme d'HTML
+    --&gt;
+    &lt;span&gt;Il est {{ now }} &lt;/span&gt;
+
+&lt;/div&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h3><a id="user-content-les-directives" class="anchor" href="#les-directives" aria-hidden="true"></a>Les directives</h3>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-quest-ce-quune-directive-" class="anchor" href="#quest-ce-quune-directive-" aria-hidden="true"></a>Qu’est-ce qu’une directive ?</h4>
+<p>Un attribut HTML compréhensible par Vue.js</p>
+<p>Il est préfixé par <code>v-</code></p>
+<pre><code class="language-html">&lt;!-- Exemples de directives --&gt;
+
+&lt;span v-show=&quot;toBeVisible&quot;&gt;
+
+
+&lt;span v-if=&quot;toBeVisible&quot;&gt;
+
+
+&lt;span v-bind:title=&quot;message&quot;&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-binder-un-attribut" class="anchor" href="#binder-un-attribut" aria-hidden="true"></a>Binder un attribut</h4>
+<p><a href="https://vuejs.org/v2/api/#v-bind"><code>v-bind</code></a></p>
+<pre><code class="language-html">&lt;script&gt;
+    const app = new Vue({
+        el: '#app',
+        data: {
+            mySuperTitle: 'Super, non ?',
+        },
+    });
+
+&lt;/script&gt;
+
+&lt;div id=&quot;app&quot;&gt;
+
+    &lt;!-- A ne pas faire... CA NE MARCHE PAS !! ;) --&gt;
+    &lt;!-- Il n'est pas possible d'utiliser la syntaxe mutache dans un attribut HTML --&gt;
+    &lt;span title=&quot;{{ mySuperTitle }}&quot;&gt;
+
+
+    &lt;!-- Il faut utiliser la directive v-bind:$attribut à la place --&gt;
+    &lt;span v-bind:title=&quot;toBeVisible&quot;&gt;
+
+
+    &lt;!-- v-bind peut être écrit avec la syntaxe abrégée :$attribut  --&gt;
+    &lt;span :title=&quot;toBeVisible&quot;&gt;
+
+&lt;/div&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-binder-des-attributs-de-style" class="anchor" href="#binder-des-attributs-de-style" aria-hidden="true"></a>Binder des attributs de style</h4>
+<p><a href="https://vuejs.org/v2/guide/class-and-style.html"><code>class and style binding</code></a></p>
+<pre><code class="language-html">&lt;script&gt;
+    const app = new Vue({
+        el: '#app',
+        data: {
+            isActive: true,
+            hasError: false,
+            activeColor: 'red',
+            fontSize: 30
+        },
+    });
+
+&lt;/script&gt;
+
+&lt;div id=&quot;app&quot;&gt;
+
+
+    &lt;!-- Binder la propriété style (inline style) --&gt;
+    &lt;span :style=&quot;{ color: activeColor, fontSize: fontSize + 'px' }&quot;&gt;&lt;/span&gt;
+
+
+    &lt;!-- Binder des classes CSS --&gt;
+    &lt;span :class=&quot;{ active: isActive, 'text-danger': hasError }&quot;&gt;&lt;/span&gt;
+
+
+&lt;/div&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-afficher-un-élément-de-manière-conditionnelle" class="anchor" href="#afficher-un-élément-de-manière-conditionnelle" aria-hidden="true"></a>Afficher un élément de manière conditionnelle</h4>
+<p><a href="https://vuejs.org/v2/api/#v-show"><code>v-show</code></a></p>
+<pre><code class="language-html">&lt;script&gt;
+
+const app = new Vue({
+    el: '#app',
+    data: {
+        seen: true
+    }
+});
+
+&lt;/script&gt;
+
+&lt;div id=&quot;app&quot;&gt;
+
+    &lt;!--
+        v-show &quot;bind&quot; la propriété seen
+        pour conditionner la visibilité de l'élément
+    --&gt;
+    &lt;span v-show=&quot;seen&quot;&gt;Now you see me&lt;/span&gt;
+
+&lt;/div&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-créer-un-élément-de-manière-conditionnelle" class="anchor" href="#créer-un-élément-de-manière-conditionnelle" aria-hidden="true"></a>Créer un élément de manière conditionnelle</h4>
+<p><a href="https://vuejs.org/v2/api/#v-if"><code>v-if</code></a>
+<a href="https://vuejs.org/v2/api/#v-else"><code>v-else</code></a>
+<a href="https://vuejs.org/v2/api/#v-else-if"><code>v-else-if</code></a></p>
+<pre><code class="language-html">&lt;script&gt;
+
+const app = new Vue({
+    el: '#app',
+    data: {
+        seen: 'B'
+    }
+});
+
+&lt;/script&gt;
+
+&lt;div id=&quot;app&quot;&gt;
+
+
+    &lt;!-- expression (booleen) pour conditionner la présence de l'élément --&gt;
+    &lt;span v-if=&quot;seen === 'A'&quot;&gt;It's an A&lt;/span&gt;
+
+
+    &lt;!-- v-else-if peut être chainé --&gt;
+    &lt;span v-else-if=&quot;seen === 'B'&quot;&gt;It's a B&lt;/span&gt;
+
+
+    &lt;!-- v-else est la négation des v-if / v-else-if qui le précèdent --&gt;
+    &lt;span v-else&gt;I dont know what it is...&lt;/span&gt;
+
+
+&lt;/div&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-afficher-une-liste-déléments" class="anchor" href="#afficher-une-liste-déléments" aria-hidden="true"></a>Afficher une liste d’éléments</h4>
+<p><a href="https://vuejs.org/v2/api/#v-for"><code>v-for</code></a></p>
+<pre><code class="language-html">&lt;script&gt;
+
+const app = new Vue({
+    el: '#app',
+    data: {
+        items: [
+            { message: 'Foo', id: 0 },
+            { message: 'Bar', id: 1 },
+        ]
+    }
+});
+
+&lt;/script&gt;
+
+&lt;div id=&quot;app&quot;&gt;
+
+    &lt;!--
+        v-for prend pour valeur alias in iterable
+        un itérable peut être un Array, un Object, un String...)
+        la directivee key permet d'indiquer ce qui rend l'élément unique
+    --&gt;
+    &lt;li v-for=&quot;item in items&quot; :key=&quot;item.id&quot;&gt;
+        {{ item.message }}
+    &lt;/li&gt;
+
+&lt;/div&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-afficher-du-html" class="anchor" href="#afficher-du-html" aria-hidden="true"></a>Afficher du HTML</h4>
+<p><a href="https://vuejs.org/v2/api/#v-html"><code>v-html</code></a></p>
+<pre><code class="language-html">&lt;script&gt;
+
+const app = new Vue({
+    el: '#app',
+    data: {
+        rawHtml: '&lt;p style=&quot;color: red;&quot;&gt;Hello!&lt;/p&gt;'
+    }
+});
+
+&lt;/script&gt;
+
+&lt;div id=&quot;app&quot;&gt;
+
+
+    &lt;span v-html=&quot;rawHtml&quot;&gt;&lt;/span&gt;
+
+
+&lt;/div&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h3><a id="user-content-labs" class="anchor" href="#labs" aria-hidden="true"></a>Labs</h3>
+<img src="images/lab.png">
+            </section>
+        
+            <section >
+                <h3><a id="user-content-lab0101" class="anchor" href="#lab0101" aria-hidden="true"></a>lab/01/01</h3>
+<h4><a id="user-content-récupérer-le-contenu-de-la-formation" class="anchor" href="#récupérer-le-contenu-de-la-formation" aria-hidden="true"></a>Récupérer le contenu de la formation</h4>
+<ol>
+<li>
+<p>Installer <a href="https://git-scm.com/">Git</a></p>
+</li>
+<li>
+<p>Créer un compte sur <a href="https://github.com">Github</a></p>
+</li>
+<li>
+<p>Communiquer l’adresse email du compte créé</p>
+</li>
+<li>
+<p>Cloner le dépôt Git de la formation (<a href="https://github.com/fmartinou/training-vuejs">github.com/fmartinou/training-vuejs</a>)</p>
+</li>
+<li>
+<p>Ouvrir la présentation <code>training-vuejs/course/index.html</code></p>
+</li>
+</ol>
+
+            </section>
+        
+            <section >
+                <h3><a id="user-content-lab0102" class="anchor" href="#lab0102" aria-hidden="true"></a>lab/01/02</h3>
+<h4><a id="user-content-installer-et-configurer-lide" class="anchor" href="#installer-et-configurer-lide" aria-hidden="true"></a>Installer et configurer l’IDE</h4>
+<ol>
+<li>
+<p>Télécharger et installer <a href="https://code.visualstudio.com/">Visual Studio Code</a></p>
+</li>
+<li>
+<p>Installer les extensions suivantes</p>
+<ul>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint">ESLint</a></li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=octref.vetur">Vetur</a></li>
+</ul>
+</li>
+<li>
+<p>Ouvrir le repo Github de la formation dans Visual Studio Code</p>
+</li>
+</ol>
+
+            </section>
+        
+            <section >
+                <h3><a id="user-content-lab0103" class="anchor" href="#lab0103" aria-hidden="true"></a>lab/01/03</h3>
+<h4><a id="user-content-installer-lextension-vuejs-devtools" class="anchor" href="#installer-lextension-vuejs-devtools" aria-hidden="true"></a>Installer l’extension Vue.js Devtools</h4>
+<ol>
+<li>
+<p>Télécharger et installer <a href="https://www.google.com/chrome">Google Chrome</a></p>
+</li>
+<li>
+<p>Installer l’extension <a href="https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd">Vue.js devtools</a> et la configurer :</p>
+<ul>
+<li><a href="chrome://extensions/?id=nhdogjmejiglipccpnnnanhbledajbpd">Ouvrir les paramètres de l’extensions</a></li>
+<li>Activer “<code>Autoriser l'accès aux URL de fichier</code>”</li>
+</ul>
+</li>
+</ol>
+<img src="images/devtools-settings.png" style="height: 400px;">
+            </section>
+        
+            <section >
+                <h3><a id="user-content-lab0104" class="anchor" href="#lab0104" aria-hidden="true"></a>lab/01/04</h3>
+<h4><a id="user-content-explorer-une-application-vuejs" class="anchor" href="#explorer-une-application-vuejs" aria-hidden="true"></a>Explorer une application Vue.js</h4>
+<ol>
+<li>
+<p>Ouvrir le fichier lab/01/04/index.html dans le navigateur</p>
+</li>
+<li>
+<p>Créer quelque “todos”</p>
+</li>
+<li>
+<p>Ouvrir l’extension Vue.js Devtools</p>
+</li>
+<li>
+<p>Modifier les “todos” dans la console (sous <code>data</code>)</p>
+</li>
+<li>
+<p>Et observer le binding fonctionner</p>
+<ul>
+<li>title</li>
+<li>completed</li>
+<li>ajout, suppression…</li>
+</ul>
+</li>
+</ol>
+
+            </section>
+        
+            <section >
+                <h3><a id="user-content-lab0105" class="anchor" href="#lab0105" aria-hidden="true"></a>lab/01/05</h3>
+<h4><a id="user-content-1ère-application-vuejs" class="anchor" href="#1ère-application-vuejs" aria-hidden="true"></a>1ère application Vue.js</h4>
+<ol>
+<li>
+<p>Ouvrir le fichier lab/01/05/index.html dans le navigateur</p>
+</li>
+<li>
+<p>Une liste de films est disponible dans la variable movies</p>
+<ul>
+<li>(regarder le fichier movies.js)</li>
+</ul>
+</li>
+<li>
+<p>Afficher tous les films sous forme d’une liste à puces</p>
+</li>
+<li>
+<p>Modifier pour que les films non encore sortis soient affichés en rouge</p>
+</li>
+<li>
+<p>Modifier pour n’afficher que les films dont la note est supérieure à 2</p>
+</li>
+</ol>
+
+            </section>
+        
+
+    </section>
+    
+
+
+
+    
+    <section>
+        <section >
+            <h2><a id="user-content-module-02" class="anchor" href="#module-02" aria-hidden="true"></a>Module 02</h2>
+<h3><a id="user-content-les-bindings-et-les-interactions-utilisateur" class="anchor" href="#les-bindings-et-les-interactions-utilisateur" aria-hidden="true"></a>Les Bindings et les interactions utilisateur</h3>
+
+            </section>
+        
+            <section >
+                <h3><a id="user-content-les-bindings" class="anchor" href="#les-bindings" aria-hidden="true"></a>Les Bindings</h3>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-linstance-et-son-contexte-réactif" class="anchor" href="#linstance-et-son-contexte-réactif" aria-hidden="true"></a>L’instance et son contexte réactif</h4>
+<p><a href="https://vuejs.org/v2/guide/instance.html">vue instance</a></p>
+<pre><code class="language-html">&lt;script&gt;
+const app = new Vue({ // 1 instance de Vue est créé et assignée à la variable app
+    el: '#app',
+
+    // Les données 'bindées' sont dans l'objet data
+    data: {
+        myData1: 'a string',
+        myData2: 'another string',
+    }
+});
+
+// Les données peuvent être accédées directement sur l'instance
+console.log(app.myData1); // Output -&gt; 'a string'
+
+// Les données peuvent être modifiées (entraine une mise à jour de l'affichage)
+app.myData1 = 'Surprise!'; 
+
+// Attention : les propriétés ajoutées dynamiquement ne seront pas réactives !
+app.noWayImNotReactive = 'Hello!';
+app.noWayImNotReactive = 'Hello?';
+app.noWayImNotReactive = 'Hello???';
+&lt;/script&gt;
+
+&lt;div id=&quot;app&quot;&gt;
+    &lt;div&gt;{{ myData1 }}&lt;/div&gt;
+    &lt;div&gt;{{ noWayImNotReactive }}&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-limites-de-lobjet-data" class="anchor" href="#limites-de-lobjet-data" aria-hidden="true"></a>Limites de l’objet <code>data</code></h4>
+<p>Comment faire si je veux afficher le message avec la 1ère lettre en majuscule ?</p>
+<pre><code class="language-html">&lt;script&gt;
+
+    const app = new Vue({
+        el: '#app',
+        data: {
+            message: 'hello world!',
+        },
+    });
+
+&lt;/script&gt;
+
+&lt;div id=&quot;app&quot;&gt;
+
+    &lt;span&gt;{{ message.charAt(0).toUpperCase() + message.slice(1) }}&lt;/span&gt;
+&lt;/div&gt;
+</code></pre>
+<p>Il faut éviter de mettre trop de logique dans les templates !</p>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-les-propriétés-calculées" class="anchor" href="#les-propriétés-calculées" aria-hidden="true"></a>Les propriétés calculées</h4>
+<p><a href="https://vuejs.org/v2/guide/computed.html">computed</a></p>
+<pre><code class="language-html">&lt;script&gt;
+    const app = new Vue({
+        el: '#app',
+        data: { message: 'hello world!' },
+
+        // Les propriétés calculées sont dans l'objet computed
+        computed: {
+            messageCapitalized: function() {
+
+                // this est l'objet app
+                return this.message.charAt(0).toUpperCase() + message.slice(1);
+            }
+        }
+    });
+
+    // Peut être accédée comme une propriété standard mais ne peut pas être modifiée
+    console.log(app.computed);      // Output -&gt; 'Hello world!'
+    app.computed = 'Surprise';      // Renvoie une Erreur
+
+    // Si message est modifié, l'affichage de messageCapitalized va être mis à jour
+    app.message = 'Coucou le monde !';
+&lt;/script&gt;
+
+&lt;div id=&quot;app&quot;&gt;
+    &lt;span&gt;{{ messageCapitalized }}&lt;/span&gt;
+&lt;/div&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-les-propriétés-calculées-avec-setter" class="anchor" href="#les-propriétés-calculées-avec-setter" aria-hidden="true"></a>Les propriétés calculées avec setter</h4>
+<p><a href="https://vuejs.org/v2/guide/computed.html#Computed-Setter">computed setter</a></p>
+<pre><code class="language-html">&lt;script&gt;
+    const app = new Vue({
+        el: '#app',
+        data: { firstName: 'John', lastName: 'Doe' },
+
+        computed: { // la propriété est un objet qui contient 2 fonctions get &amp; set
+            fullName: {
+
+                get: function() {
+                    return this.firstName + ' ' + this.lastName;
+                }
+
+                set: function (newValue) {
+                    const names = newValue.split(' ');
+                    this.firstName = names[0];
+                    this.lastName = names[names.length - 1];
+                }
+            }
+        }
+    });
+
+    console.log(app.fullName);          // Le getter sera invoqué 
+    app.fullName = 'John McClane';      // Le setter sera invoqué
+
+&lt;/script&gt;
+
+&lt;div id=&quot;app&quot;&gt;&lt;span&gt;{{ fullName }}&lt;/span&gt;&lt;/div&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-les-observateurs" class="anchor" href="#les-observateurs" aria-hidden="true"></a>Les Observateurs</h4>
+<p><a href="https://vuejs.org/v2/guide/computed.html#Watchers">watchers</a></p>
+<pre><code class="language-html">&lt;script&gt;
+    const app = new Vue({
+        el: '#app',
+        data: { message: 'Hello world!' },
+
+        watch: {
+
+            // Invoque la fonction à chaque fois que la propriété 'message' change
+            message: function(oldMessage, newMessage) {
+                if (oldMessage === newMessage) {
+                    displayMessage('Seriously? Are you kidding?');
+                }
+            }
+        }
+    });
+&lt;/script&gt;
+
+&lt;div id=&quot;app&quot;&gt;
+    &lt;span&gt;{{ fullName }}&lt;/span&gt;
+&lt;/div&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-les-méthodes" class="anchor" href="#les-méthodes" aria-hidden="true"></a>Les méthodes</h4>
+<p><a href="https://vuejs.org/v2/api/#methods">methods</a></p>
+<pre><code class="language-html">&lt;script&gt;
+    const app = new Vue({
+        el: '#app',
+        data: { weird: 'Weird!' },
+
+        methods: {
+
+            doSomethingWeird() {
+
+                // this référence l'application app
+                myWeirdApi.run(this.weird);
+
+            }
+
+            saveUser(user) {
+
+                myUserApi.save(user);
+
+            }
+        }
+    });
+&lt;/script&gt;
+
+&lt;div id=&quot;app&quot;&gt;&lt;span&gt;{{ fullName }}&lt;/span&gt;&lt;/div&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h3><a id="user-content-les-événements" class="anchor" href="#les-événements" aria-hidden="true"></a>Les événements</h3>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-ecouter-des-événements" class="anchor" href="#ecouter-des-événements" aria-hidden="true"></a>Ecouter des événements</h4>
+<p><a href="https://vuejs.org/v2/api/#v-on">v-on</a></p>
+<pre><code class="language-html">&lt;script&gt;
+    const app = new Vue({ el: '#app' });
+&lt;/script&gt;
+
+&lt;!-- Exemple classique (sans vue) --&gt;
+&lt;button onclick=&quot;alert('Hello!');&quot;&gt;Click me!&lt;/button&gt;
+
+&lt;div id=&quot;app&quot;&gt;
+
+    &lt;!--
+        Exemple avec vue
+        Syntaxe est v-on:eventName
+    --&gt;
+    &lt;button v-on:click=&quot;alert('Hello!');&quot;&gt;Click me!&lt;/button&gt;
+
+&lt;/div&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-appeler-un-handler" class="anchor" href="#appeler-un-handler" aria-hidden="true"></a>Appeler un handler</h4>
+<p><a href="https://vuejs.org/v2/guide/events.html#Method-Event-Handlers">v-on handler</a></p>
+<pre><code class="language-html">&lt;script&gt;
+    const app = new Vue({
+        el: '#app',
+        methods: {
+
+            // Le handler fait partie des methods
+            // Il prend en paramètre l'événement natif provenant du DOM
+            callMeOnButtonClick: function(event) {
+
+                console.log(event);
+
+            }
+        }
+    });
+&lt;/script&gt;
+
+&lt;div id=&quot;app&quot;&gt;
+
+    &lt;!-- il est possible de donner une référence de méthode --&gt;
+    &lt;button v-on:click=&quot;callMeOnButtonClick&quot;&gt;Click me!&lt;/button&gt;
+
+    &lt;!-- il est possible d'exécuter la méthode directement --&gt;
+    &lt;button v-on:click=&quot;callMeOnButtonClick($event)&quot;&gt;Click me!&lt;/button&gt;
+
+&lt;/div&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-syntaxe-courte" class="anchor" href="#syntaxe-courte" aria-hidden="true"></a>Syntaxe courte</h4>
+<p><a href="https://vuejs.org/v2/api/#v-on">@</a></p>
+<pre><code class="language-html">&lt;script&gt;
+    const app = new Vue({ el: '#app' });
+&lt;/script&gt;
+
+&lt;div id=&quot;app&quot;&gt;
+
+    &lt;!-- Syntaxe classique --&gt;
+    &lt;button v-on:click=&quot;alert('Hello!')&quot;&gt;Click me!&lt;/button&gt;
+
+    &lt;!-- Syntaxe courte --&gt;
+    &lt;button @click=&quot;alert('Hello!')&quot;&gt;Click me!&lt;/button&gt;
+
+&lt;/div&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-les-modificateurs" class="anchor" href="#les-modificateurs" aria-hidden="true"></a>Les modificateurs</h4>
+<p><a href="https://vuejs.org/v2/guide/events.html#Event-Modifiers">modifiers</a></p>
+<pre><code class="language-html">&lt;script&gt;
+    const app = new Vue({ el: '#app' });
+&lt;/script&gt;
+
+&lt;div id=&quot;app&quot;&gt;
+
+    &lt;!--
+        .stop est un modifier
+        qui appelle event.stopPropagation() sur l'événement natif
+    --&gt;
+    &lt;button @click.stop=&quot;alert('Hello!')&quot;&gt;Click me!&lt;/button&gt;
+
+    &lt;!--
+        .prevent est un modifier
+        qui appelle event.preventDefault() sur l'événement natif
+    --&gt;
+    &lt;button @click.prevent=&quot;alert('Hello!')&quot;&gt;Click me!&lt;/button&gt;
+
+
+    &lt;!--
+        .once est un modifier
+        l'événement sera déclenché (au plus) 1 fois
+    --&gt;
+    &lt;button @click.prevent=&quot;alert('Hello!')&quot;&gt;Click me!&lt;/button&gt;
+
+&lt;/div&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-les-événements-du-clavier" class="anchor" href="#les-événements-du-clavier" aria-hidden="true"></a>Les événements du clavier</h4>
+<p><a href="https://vuejs.org/v2/guide/events.html#Key-Modifiers">keyboard modifiers</a></p>
+<pre><code class="language-html">&lt;script&gt;
+    const app = new Vue({ el: '#app' });
+&lt;/script&gt;
+
+&lt;div id=&quot;app&quot;&gt;
+
+    &lt;!-- event sur toutes les touches --&gt;
+    &lt;input v-on:keyup=&quot;submit&quot;&gt;
+
+    &lt;!-- event sur touche PageDown --&gt;
+    &lt;input v-on:keyup.page-down=&quot;submit&quot;&gt;
+
+    &lt;!-- event sur combinaison de touches Alt + C --&gt;
+    &lt;input v-on:keyup.alt.67=&quot;submit&quot;&gt;
+
+    &lt;!-- event sur combinaison Ctrl + Click --&gt;
+    &lt;input v-on:click.ctrl=&quot;submit&quot;&gt;
+
+&lt;/div&gt;
+</code></pre>
+<p>Vue fournit des alias pour les codes touches communs</p>
+<p><code>enter tab delete esc space up down left right</code></p>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-les-événements-de-la-souris" class="anchor" href="#les-événements-de-la-souris" aria-hidden="true"></a>Les événements de la souris</h4>
+<p><a href="https://vuejs.org/v2/guide/events.html#Mouse-Button-Modifiers">mouse modifiers</a></p>
+<pre><code class="language-html">&lt;script&gt;
+    const app = new Vue({ el: '#app' });
+&lt;/script&gt;
+
+&lt;div id=&quot;app&quot;&gt;
+
+    &lt;!-- event sur tous les clics --&gt;
+    &lt;button v-on:click=&quot;submit&quot;&gt;Click me!&lt;/button&gt;
+
+    &lt;!-- event sur clic gauche --&gt;
+    &lt;button v-on:click.left=&quot;submit&quot;&gt;Click me!&lt;/button&gt;
+
+    &lt;!-- event sur clic droit --&gt;
+    &lt;button v-on:click.right=&quot;submit&quot;&gt;Click me!&lt;/button&gt;
+
+    &lt;!-- event sur clic du milieu --&gt;
+    &lt;button v-on:click.middle=&quot;submit&quot;&gt;Click me!&lt;/button&gt;
+
+&lt;/div&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h3><a id="user-content-binding-bidirectionnel" class="anchor" href="#binding-bidirectionnel" aria-hidden="true"></a>Binding bidirectionnel</h3>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-sans-binding-bidirectionnel" class="anchor" href="#sans-binding-bidirectionnel" aria-hidden="true"></a>Sans binding bidirectionnel…</h4>
+<pre><code class="language-html">&lt;script&gt;
+    const app = new Vue({
+        el: '#app',
+        data: {
+            myValue: 'Hello!',
+        },
+
+        methods: {
+            updateMyValue: function(event) {
+                this.message = event.target.value;
+            }
+        }
+    });
+&lt;/script&gt;
+
+&lt;div id=&quot;app&quot;&gt;
+
+    &lt;!--
+        Binding data.myValue -&gt; input.value
+        Event input.change -&gt; updateMyValue
+    --&gt;
+    &lt;input type=&quot;text&quot; :value=&quot;myValue&quot; @input=&quot;updateMyValue($event)&quot;&gt;
+
+&lt;/div&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-avec-binding-bidirectionnel" class="anchor" href="#avec-binding-bidirectionnel" aria-hidden="true"></a>Avec binding bidirectionnel…</h4>
+<p><a href="https://vuejs.org/v2/api/#v-model">v-model</a></p>
+<pre><code class="language-html">&lt;script&gt;
+    const app = new Vue({
+        el: '#app',
+        data: {
+            myValue: 'Hello!',
+        },
+    });
+&lt;/script&gt;
+
+&lt;div id=&quot;app&quot;&gt;
+
+    &lt;!--
+        Binding data.myValue -&gt; input.value
+        Binding input.value  -&gt; data.myValue
+    --&gt;
+    &lt;input type=&quot;text&quot; v-model=&quot;myValue&quot;&gt;
+
+    &lt;!--
+        v-model fonctionne pour les éléments :
+
+            - &lt;input type=&quot;text&quot;&gt; (propriété value / événement input)
+            - &lt;input type=&quot;checkbox&quot;&gt; (propriété checked / événement change)
+            - &lt;textarea&gt; (propriété value / événement input)
+            - &lt;select&gt; (propriété value / événement change)
+    --&gt;
+
+&lt;/div&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-binding-bidirectionnel-text" class="anchor" href="#binding-bidirectionnel-text" aria-hidden="true"></a>Binding bidirectionnel Text</h4>
+<pre><code class="language-html">&lt;script&gt;
+    const app = new Vue({
+        el: '#app',
+        data: {
+            myValue: 'Hello!',
+        },
+    });
+&lt;/script&gt;
+
+&lt;div id=&quot;app&quot;&gt;
+
+    &lt;input type=&quot;text&quot; v-model=&quot;myValue&quot;&gt;
+
+    &lt;textarea v-model=&quot;myValue&quot;&gt;&lt;.textarea&gt;
+
+&lt;/div&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-binding-bidirectionnel-case-à-cocher" class="anchor" href="#binding-bidirectionnel-case-à-cocher" aria-hidden="true"></a>Binding bidirectionnel Case à cocher</h4>
+<pre><code class="language-html">&lt;script&gt;
+    const app = new Vue({
+        el: '#app',
+        data: {
+            myValue: true,
+        },
+    });
+&lt;/script&gt;
+
+&lt;div id=&quot;app&quot;&gt;
+
+    &lt;!-- myValue est un booléen --&gt;
+    &lt;input type=&quot;checkbox&quot; v-model=&quot;myValue&quot;&gt;
+
+&lt;/div&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-binding-bidirectionnel-groupe-de-cases-à-cocher" class="anchor" href="#binding-bidirectionnel-groupe-de-cases-à-cocher" aria-hidden="true"></a>Binding bidirectionnel Groupe de Cases à cocher</h4>
+<pre><code class="language-html">&lt;script&gt;
+    const app = new Vue({
+        el: '#app',
+        data: {
+            myValue: ['A', 'C'],
+        },
+    });
+&lt;/script&gt;
+
+&lt;div id=&quot;app&quot;&gt;
+
+    &lt;!-- myValue est un tableau --&gt;
+    &lt;input type=&quot;checkbox&quot; v-model=&quot;myValue&quot; value=&quot;A&quot;&gt;
+    &lt;input type=&quot;checkbox&quot; v-model=&quot;myValue&quot; value=&quot;B&quot;&gt;
+    &lt;input type=&quot;checkbox&quot; v-model=&quot;myValue&quot; value=&quot;C&quot;&gt;
+
+&lt;/div&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-binding-bidirectionnel-boutons-radio" class="anchor" href="#binding-bidirectionnel-boutons-radio" aria-hidden="true"></a>Binding bidirectionnel Boutons Radio</h4>
+<pre><code class="language-html">&lt;script&gt;
+    const app = new Vue({
+        el: '#app',
+        data: {
+            myValue: 'B',
+        },
+    });
+&lt;/script&gt;
+
+&lt;div id=&quot;app&quot;&gt;
+
+    &lt;!-- myValue est une String --&gt;
+    &lt;input type=&quot;radio&quot; v-model=&quot;myValue&quot; value=&quot;A&quot;&gt;
+    &lt;input type=&quot;radio&quot; v-model=&quot;myValue&quot; value=&quot;B&quot;&gt;
+    &lt;input type=&quot;radio&quot; v-model=&quot;myValue&quot; value=&quot;C&quot;&gt;
+
+&lt;/div&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-binding-bidirectionnel-liste-de-choix" class="anchor" href="#binding-bidirectionnel-liste-de-choix" aria-hidden="true"></a>Binding bidirectionnel Liste de choix</h4>
+<pre><code class="language-html">&lt;script&gt;
+    const app = new Vue({
+        el: '#app',
+        data: {
+            myValue: 'B',
+        },
+    });
+&lt;/script&gt;
+
+&lt;div id=&quot;app&quot;&gt;
+
+    &lt;!-- myValue est une String --&gt;
+    &lt;select v-model=&quot;myValue&quot;&gt;
+        &lt;option&gt;A&lt;/option&gt;
+        &lt;option&gt;B&lt;/option&gt;
+        &lt;option&gt;C&lt;/option&gt;
+    &lt;/select&gt;
+
+&lt;/div&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-binding-bidirectionnel-liste-de-choix-multivaluée" class="anchor" href="#binding-bidirectionnel-liste-de-choix-multivaluée" aria-hidden="true"></a>Binding bidirectionnel Liste de choix multivaluée</h4>
+<pre><code class="language-html">&lt;script&gt;
+    const app = new Vue({
+        el: '#app',
+        data: {
+            myValue: ['A', 'C'],
+        },
+    });
+&lt;/script&gt;
+
+&lt;div id=&quot;app&quot;&gt;
+
+    &lt;!-- myValue est un tableau --&gt;
+    &lt;select v-model=&quot;myValue&quot; multiple&gt;
+        &lt;option&gt;A&lt;/option&gt;
+        &lt;option&gt;B&lt;/option&gt;
+        &lt;option&gt;C&lt;/option&gt;
+    &lt;/select&gt;
+
+&lt;/div&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h3><a id="user-content-les-filtres" class="anchor" href="#les-filtres" aria-hidden="true"></a>Les filtres</h3>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-créer-un-filtre" class="anchor" href="#créer-un-filtre" aria-hidden="true"></a>Créer un filtre</h4>
+<p><a href="https://vuejs.org/v2/guide/filters.html">a | b</a></p>
+<pre><code class="language-html">&lt;script&gt;
+    const app = new Vue({
+        el: '#app',
+        data: { myValue: 'hello world!' },
+
+        filters: {
+            capitalize: function (value) {
+                return value.charAt(0).toUpperCase() + value.slice(1);
+            }, 
+
+            lol: function (value, extra) {
+                return `${value} ${extra}!!!`;
+            }, 
+        }
+    });
+&lt;/script&gt;
+
+&lt;div id=&quot;app&quot;&gt;
+
+    &lt;!-- Les filtres sont chainés avec des pipes (comme unix) --&gt;
+    &lt;div&gt;{{ myValue | capitalize | lol }}&lt;/div&gt;
+
+    &lt;!-- Les filtres sont aussi utilisables dans les directives --&gt;
+    &lt;input :value=&quot;myValue | capitalize | lol('extra')&quot;&gt;
+&lt;/div&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h3><a id="user-content-labs-1" class="anchor" href="#labs-1" aria-hidden="true"></a>Labs</h3>
+<img src="images/lab.png">
+            </section>
+        
+            <section >
+                <h3><a id="user-content-lab0201" class="anchor" href="#lab0201" aria-hidden="true"></a>lab/02/01</h3>
+<h4><a id="user-content-implémenter-une-librairie-en-ligne" class="anchor" href="#implémenter-une-librairie-en-ligne" aria-hidden="true"></a>Implémenter une librairie en ligne…</h4>
+<pre><code class="language-md">- Catalogue
+    - Affichage liste de catégories (Policier, SF...)
+    - Affichage liste de livres en fonction de la catégorie
+    - Ajout des livres au panier (pas de doublons)
+
+- Panier
+    - Affichage articles commandés
+    - Affichage total du panier
+    - Suppression possible (croix rouge)
+
+- Contact
+    - Saisie des infos client (nom, prénom...)
+    - Affichage liste des pays supportés
+
+- Bouton payer
+    - Accessible si au moins 1 article dans le panier
+    - Accessible si toutes les infos du contact sont renseignées
+    - Au clic, le panier et les coordonnées sont vidées
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h3><a id="user-content-lab0201-1" class="anchor" href="#lab0201-1" aria-hidden="true"></a>lab/02/01</h3>
+<h4><a id="user-content-tips" class="anchor" href="#tips" aria-hidden="true"></a>Tips</h4>
+<pre><code class="language-md">- Une variable globale contient le catalogue (voir data.js)
+    - categories
+
+- Une variable globale contient les pays (voir data.js)
+    - countries
+
+- Pour trier des objets par rapport à une prop a -&gt; z (categories...)
+    - Regarder la fonction String.prototype.localeCompare...
+
+- Pour formatter les prix
+    - Regarder la fonction Number.prototype.toFixed...
+
+- Pour supprimer un élément d'un tableau
+    - Regarder la fonction Array.prototype.splice...
+
+- Pour activer /désactiver un bouton
+    - Regarder la propriété disabled de l'élément HTML button...
+</code></pre>
+
+            </section>
+        
+
+    </section>
+    
+
+
+
+    
+    <section>
+        <section >
+            <h2><a id="user-content-module-03" class="anchor" href="#module-03" aria-hidden="true"></a>Module 03</h2>
+<h3><a id="user-content-les-composants" class="anchor" href="#les-composants" aria-hidden="true"></a>Les Composants</h3>
+
+            </section>
+        
+            <section >
+                <h3><a id="user-content-rappel" class="anchor" href="#rappel" aria-hidden="true"></a>Rappel</h3>
+<p>Eléments <strong>indépendants</strong> et <strong>réutilisables</strong></p>
+<img src="images/component_layout.png">
+            </section>
+        
+            <section >
+                <h3><a id="user-content-créer-des-composants-avec-vuejs" class="anchor" href="#créer-des-composants-avec-vuejs" aria-hidden="true"></a>Créer des composants avec Vue.js</h3>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-anatomie-dun-composant" class="anchor" href="#anatomie-dun-composant" aria-hidden="true"></a>Anatomie d’un composant</h4>
+<pre><code class="language-javascript">// Un composant est un object JavaScript
+const myComponent = {
+
+    // Attention !
+    // data est une fonction qui retourne les données à binder
+    data: function() {
+        return {
+            count: 0,
+        }
+    },
+
+    // un composant peut avoir des methods, computed, watch, filters...
+    methods: {
+        add: function() {
+            this.count++;
+        }
+    },
+
+    // Définit la template html du composant (sous forme de String)
+    template: '&lt;button @click=&quot;add&quot;&gt;Nb clicks = {{ count }}&lt;/button&gt;',
+
+};
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-template-multi-lignes" class="anchor" href="#template-multi-lignes" aria-hidden="true"></a>Template multi-lignes</h4>
+<pre><code class="language-javascript">const myComponent = {
+
+    data: function() {
+        return {
+            count: 0,
+        }
+    },
+
+    methods: {
+        add: function() {
+            this.count++;
+        }
+    },
+
+    // template définie dans un littéral de gabarit JavaScript (`toto ${toto}`)
+    template: `
+        &lt;div class=&quot;toto&quot;&gt;
+            &lt;div class=&quot;tutu&quot;&gt;
+                &lt;button @click=&quot;add&quot;&gt;Nb clicks = {{ count }}&lt;/button&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    `,
+};
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-enregistrer-et-utiliser-un-composant" class="anchor" href="#enregistrer-et-utiliser-un-composant" aria-hidden="true"></a>Enregistrer et Utiliser un composant</h4>
+<p><a href="https://vuejs.org/v2/guide/components-registration.html">registration</a></p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;script&gt;
+            // Des composants Vue.js
+            const MyComponent      = { ... };
+            const MyOtherComponent = { ... };
+
+            const app = new Vue({
+                el: '#app',
+
+                // Les composants sont enregistrés avec un nom
+                components: {
+                    'my-component-is-awesome'        : MyComponent,
+                    'my-other-component-is-great-too': MyOtherComponent,
+                }
+            });
+        &lt;/script&gt;
+
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;div id=&quot;app&quot;&gt;
+            &lt;my-component-is-awesome&gt;&lt;/my-component-is-awesome&gt;
+            &lt;my-other-component-is-great-too&gt;&lt;/my-other-component-is-great-too&gt;
+        &lt;/div&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-les-instances-des-composants" class="anchor" href="#les-instances-des-composants" aria-hidden="true"></a>Les instances des composants</h4>
+<p>Les composants Vue.js sont des
+<a href="https://vuejs.org/v2/guide/instance.html">instances Vue</a>
+à part entière</p>
+<p>Ils possèdent donc leurs propres <br>
+<a href="https://vuejs.org/v2/api/#data">data</a> <br>
+<a href="https://vuejs.org/v2/api/#methods">methods</a> <br>
+<a href="https://vuejs.org/v2/guide/computed.html">computed</a> <br>
+<a href="https://vuejs.org/v2/guide/computed.html#Watchers">watchers</a></p>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-réutiliser-un-composant" class="anchor" href="#réutiliser-un-composant" aria-hidden="true"></a>Réutiliser un composant</h4>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;script&gt;
+            const MyComponent = { ... };
+
+            const app = new Vue({
+                el: '#app',
+
+                components: {
+                    'foo': MyComponent,
+                    'bar': MyComponent,
+                }
+            });
+        &lt;/script&gt;
+
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;div id=&quot;app&quot;&gt;
+
+            &lt;!-- Chaque composant a sa propre instance (état...)--&gt;
+            &lt;foo&gt;&lt;/foo&gt;
+            &lt;bar&gt;&lt;/bar&gt;
+
+        &lt;/div&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-enregistrer-un-sous-composant" class="anchor" href="#enregistrer-un-sous-composant" aria-hidden="true"></a>Enregistrer un sous-composant</h4>
+<p>Les composants peuvent être imbriqués</p>
+<pre><code class="language-html">&lt;html&gt;
+    &lt;head&gt;
+        &lt;script&gt;
+            const MyNestedComponent = { template: '&lt;p&gt;Nested!!!&lt;/p&gt;' };
+
+            const MyMainComponent = { 
+                components: {
+                    nested: MyNestedComponent,
+                },
+                template: '&lt;p&gt;Main!!!&lt;nested&gt;&lt;/nested&gt;&lt;/p&gt;',
+            };
+
+            const app = new Vue({
+                el: '#app',
+                components: {
+                    'main': MyMainComponent,
+                }
+            });
+        &lt;/script&gt;
+    &lt;/head&gt;
+
+    &lt;body&gt;
+        &lt;div id=&quot;app&quot;&gt;
+            &lt;main&gt;&lt;/main&gt;
+        &lt;/div&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-enregistrer-un-composant-global-utilisable-partout" class="anchor" href="#enregistrer-un-composant-global-utilisable-partout" aria-hidden="true"></a>Enregistrer un composant global (utilisable partout)</h4>
+<p><a href="https://vuejs.org/v2/guide/components-registration.html#Global-Registration">global</a></p>
+<pre><code class="language-html">&lt;html&gt;
+    &lt;head&gt;
+        &lt;script&gt;
+
+            const MyGlobalComponent = { template: '&lt;p&gt;Global!!!&lt;/p&gt;' };
+
+            Vue.component('global', MyGlobalComponent)
+
+            const app = new Vue({
+                el: '#app',
+
+                // Les composants globaux n'ont pas besoin d'être enregistrés
+                components: {}
+            });
+        &lt;/script&gt;
+    &lt;/head&gt;
+    
+    &lt;body&gt;
+        &lt;div id=&quot;app&quot;&gt;
+
+            &lt;global&gt;&lt;/global&gt;
+
+        &lt;/div&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h3><a id="user-content-la-communication-entre-les-composants" class="anchor" href="#la-communication-entre-les-composants" aria-hidden="true"></a>La communication entre les composants</h3>
+<h4><a id="user-content-les-props" class="anchor" href="#les-props" aria-hidden="true"></a><a href="https://vuejs.org/v2/guide/components-props.html"><code>Les props</code></a></h4>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-passer-des-propriétés-à-un-composant" class="anchor" href="#passer-des-propriétés-à-un-composant" aria-hidden="true"></a>Passer des propriétés à un composant</h4>
+<pre><code class="language-html">&lt;html&gt;
+    &lt;head&gt;
+        &lt;script&gt;
+            const MyComponent = {
+
+                // Les propriétés attendues en entrée par le composant
+                props: ['messageToDisplay'],
+
+                // Les propriétés sont utilisables dans les templates
+                template: '&lt;p&gt;{{ messageToDisplay }}&lt;/p&gt;'
+            };
+            
+            const app = new Vue({
+                el: '#app',
+                components: { 'my-component': MyComponent }
+            });
+        &lt;/script&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;div id=&quot;app&quot;&gt;
+            &lt;!--
+                Les propriétés sont valorisées par les attributs HTML
+                CamelCase -&gt; kebab-case
+            --&gt;
+            &lt;my-component message-to-display=&quot;Hello World!&quot;&gt;&lt;/my-component&gt;
+        &lt;/div&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-passer-des-propriétés-dynamiques" class="anchor" href="#passer-des-propriétés-dynamiques" aria-hidden="true"></a>Passer des propriétés dynamiques</h4>
+<pre><code class="language-html">&lt;html&gt;
+    &lt;head&gt;
+        &lt;script&gt;
+            const MyComponent = {
+                props: [message],
+                template: '...'
+            };
+            
+            const app = new Vue({
+                el: '#app',
+                components: { 'my-component': MyComponent },
+                data: {
+                    blablaVar: 'Blabla!',
+                }
+            });
+        &lt;/script&gt;
+    &lt;/head&gt;
+    
+    &lt;body&gt;
+        &lt;div id=&quot;app&quot;&gt;
+
+            &lt;!-- v-bind peut être utilisé dans les props --&gt;
+            &lt;my-component v-bind:message=&quot;blablaVar&quot;&gt;&lt;/my-component&gt;
+            &lt;my-component       :message=&quot;blablaVar&quot;&gt;&lt;/my-component&gt;
+        &lt;/div&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-typer-les-propriétés" class="anchor" href="#typer-les-propriétés" aria-hidden="true"></a>Typer les propriétés</h4>
+<pre><code class="language-html">&lt;html&gt;
+    &lt;head&gt;
+        &lt;script&gt;
+            const MyComponent = {
+                // Les propriétés peuvent être typées
+                // (String, Number, Boolean, Array, Object, Date, Function)
+                props: { 
+                    message: String,
+                    amount:  Number,
+                    ok:      Boolean,
+                },
+            };
+            const app = new Vue({ components: { 'my-component': MyComponent } });
+        &lt;/script&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;div id=&quot;app&quot;&gt;
+            &lt;!--
+                v-bind doit être utilisé
+                pour que Vue invoque une expression JavaScript
+                et ne passe pas les Strings '42.21' et 'true'
+            --&gt;
+            &lt;my-component message=&quot;Hello World!&quot; :amount=&quot;42.21&quot; :ok=&quot;true&quot;&gt;
+            &lt;/my-component&gt;
+        &lt;/div&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-valider-les-propriétés" class="anchor" href="#valider-les-propriétés" aria-hidden="true"></a>Valider les propriétés</h4>
+<pre><code class="language-html">&lt;html&gt;
+    &lt;head&gt;
+        &lt;script&gt;
+            const MyComponent = {
+                props: {
+                    message: {
+                        type:      String,              // type
+                        required:  true,                // obligatoire
+                        validator: function(value) {    // fonction de validation
+                            value.length &gt; 20
+                        },
+                    },
+                    amount: {
+                        type:    Number,
+                        default: 100,                   // valeur par défaut
+                    },
+                },
+
+                template: '...'
+            };
+        &lt;/script&gt;
+    &lt;/head&gt;
+&lt;/html&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-le-binding-des-propriétés" class="anchor" href="#le-binding-des-propriétés" aria-hidden="true"></a>Le binding des propriétés</h4>
+<p><a href="https://vuejs.org/v2/guide/components-props.html#One-Way-Data-Flow">one way data flow</a></p>
+<p><strong>Unidirectionnel !</strong>
+<br><br></p>
+<ul>
+<li>Si la valeur de la propriété change dans le composant parent
+<ul>
+<li>le changement est propagé dans le composant enfant</li>
+</ul>
+</li>
+</ul>
+<p><br><br></p>
+<ul>
+<li>Si la valeur de la propriété change dans le composant enfant
+<ul>
+<li>le changment n’est pas propagé dans le composant parent</li>
+<li>(Vuejs va logger un warning)</li>
+</ul>
+</li>
+</ul>
+
+            </section>
+        
+            <section >
+                <h3><a id="user-content-la-communication-entre-les-composants-1" class="anchor" href="#la-communication-entre-les-composants-1" aria-hidden="true"></a>La communication entre les composants</h3>
+<h4><a id="user-content-les-événements-1" class="anchor" href="#les-événements-1" aria-hidden="true"></a><a href="https://vuejs.org/v2/guide/components-custom-events.html"><code>Les événements</code></a></h4>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-emettre-des-événements-depuis-un-composant" class="anchor" href="#emettre-des-événements-depuis-un-composant" aria-hidden="true"></a>Emettre des événements depuis un Composant</h4>
+<p><a href="https://vuejs.org/v2/api/#vm-emit">$emit</a></p>
+<pre><code class="language-html">&lt;html&gt;
+    &lt;head&gt;
+        &lt;script&gt;
+            const MyComponent = {
+
+                template: `
+                    &lt;!-- Emettre un événement sans donnée --&gt;
+                    &lt;button @click=&quot;$emit('my-custom-event')&quot;&gt;
+                        Click me!
+                    &lt;/button&gt;
+
+                    &lt;!-- Emettre un événement avec 2 données --&gt;
+                    &lt;button @click=&quot;$emit('my-custom-event', 'hello', 'world')&quot;&gt;
+                        Click me!
+                    &lt;/button&gt;
+                `
+            };
+        &lt;/script&gt;
+    &lt;/head&gt;
+&lt;/html&gt;
+</code></pre>
+<p><small>Il est préconisé d’utiliser la syntaxe <strong>kebab-case</strong> pour nommer les événements</small></p>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-ecouter-un-événement-depuis-un-composant" class="anchor" href="#ecouter-un-événement-depuis-un-composant" aria-hidden="true"></a>Ecouter un événement depuis un composant</h4>
+<p>Rien ne change…
+on utilise toujours
+<a href="https://vuejs.org/v2/api/#v-on">v-on</a> !</p>
+<pre><code class="language-html">&lt;html&gt;
+    &lt;head&gt;
+        &lt;script&gt;
+            const MyComponent = {
+                template: `
+                    &lt;button @click=&quot;$emit('my-custom-event', 'hi', 'you')&quot;&gt;
+                        Click me!
+                    &lt;/button&gt;`
+            };
+            const app = new Vue({
+                components: { 'my-component': MyComponent },
+                methods: {
+                    displayMessage: function(a, b) {
+                        console.log(`${a} ${b}!`);
+                    }
+                }
+            });
+        &lt;/script&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;div id=&quot;app&quot;&gt;
+            &lt;my-component v-on:my-custom-event=&quot;displayMessage&quot;&gt;&lt;/my-component&gt;
+            &lt;my-component      my-custom-event=&quot;displayMessage&quot;&gt;&lt;/my-component&gt;
+        &lt;/div&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-vue-globale-de-la-communication-entre-les-composants" class="anchor" href="#vue-globale-de-la-communication-entre-les-composants" aria-hidden="true"></a>Vue globale de la communication entre les composants</h4>
+<img src="images/component-communication.png">
+            </section>
+        
+            <section >
+                <h3><a id="user-content-les-slots" class="anchor" href="#les-slots" aria-hidden="true"></a>Les slots</h3>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-la-problématique" class="anchor" href="#la-problématique" aria-hidden="true"></a>La problématique</h4>
+<p>un composant générique <strong>Contact</strong> affiche le nom et le prénom <br>
+et peut afficher des propriétés “custom” <br>
+en fonction de son utilisation</p>
+<pre><code class="language-html">&lt;!-- Dans certains cas, on veut afficher l'adresse--&gt;
+&lt;div id=&quot;contact1&quot;&gt;
+    &lt;input name=&quot;firstName&quot;&gt;
+    &lt;input name=&quot;lastName&quot;&gt;
+    &lt;div id=&quot;customDetails&quot;&gt;
+        &lt;input name=&quot;street&quot;&gt;
+        &lt;input name=&quot;zipCode&quot;&gt;
+        &lt;input name=&quot;city&quot;&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Dans certains cas, on veut afficher le tel/mail--&gt;
+&lt;div id=&quot;contact1&quot;&gt;
+    &lt;input name=&quot;firstName&quot;&gt;
+    &lt;input name=&quot;lastName&quot;&gt;
+    &lt;div id=&quot;customDetails&quot;&gt;
+        &lt;input name=&quot;tel&quot;&gt;
+        &lt;input name=&quot;mail&quot;&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<p>On fait comment ?</p>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-créer-un-composant-avec-un-slot" class="anchor" href="#créer-un-composant-avec-un-slot" aria-hidden="true"></a>Créer un composant avec un slot</h4>
+<pre><code class="language-html">&lt;html&gt;
+    &lt;head&gt;
+        &lt;script&gt;
+            const MyComponent = {
+
+                template: `
+                    &lt;div id=&quot;contact1&quot;&gt;
+
+                        &lt;input name=&quot;firstName&quot;&gt;
+                        &lt;input name=&quot;lastName&quot; &gt;
+
+                        &lt;div id=&quot;customDetails&quot;&gt;
+
+                            &lt;!-- Emplacement prévu pour le slot --&gt;
+                            &lt;slot&gt;&lt;/slot&gt;
+
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                `
+            };
+        &lt;/script&gt;
+    &lt;/head&gt;
+&lt;/html&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-utiliser-un-composant-avec-un-slot" class="anchor" href="#utiliser-un-composant-avec-un-slot" aria-hidden="true"></a>Utiliser un composant avec un slot</h4>
+<pre><code class="language-html">&lt;body&gt;
+    &lt;div id=&quot;app&quot;&gt;
+        &lt;my-component&gt;
+
+            &lt;!--
+                Les children seront créés à la place du &lt;slot&gt;&lt;/slot&gt;
+                de la template de my-component
+            --&gt;
+            &lt;input name=&quot;street&quot; &gt;
+            &lt;input name=&quot;zipCode&quot;&gt;
+            &lt;input name=&quot;city&quot;   &gt;
+
+        &lt;/my-component&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-fournir-une-valeur-par-défaut-pour-le-slot" class="anchor" href="#fournir-une-valeur-par-défaut-pour-le-slot" aria-hidden="true"></a>Fournir une valeur par défaut pour le slot</h4>
+<pre><code class="language-html">&lt;html&gt;
+    &lt;head&gt;
+        &lt;script&gt;
+            const MyComponent = {
+
+                template: `
+                    &lt;div id=&quot;contact1&quot;&gt;
+                        &lt;input name=&quot;firstName&quot;&gt;
+                        &lt;input name=&quot;lastName&quot; &gt;
+
+                        &lt;div id=&quot;customDetails&quot;&gt;
+                            &lt;!--
+                                Le slot avec une valeur par défaut
+                                (sera écrasé si contenu dans le composant parent)
+                            --&gt;
+                            &lt;slot&gt;
+                                &lt;p&gt;No custom details to display...&lt;/p&gt;
+                            &lt;/slot&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                `
+            };
+        &lt;/script&gt;
+    &lt;/head&gt;
+&lt;/html&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-définir-un-composant-avec-plusieurs-slots" class="anchor" href="#définir-un-composant-avec-plusieurs-slots" aria-hidden="true"></a>Définir un composant avec plusieurs slots</h4>
+<p><a href="https://vuejs.org/v2/guide/components-slots.html#Named-Slots">named slots</a></p>
+<pre><code class="language-html">&lt;html&gt;
+    &lt;head&gt;
+        &lt;script&gt;
+            const MyComponent = {
+
+                template: `
+                    &lt;div class=&quot;container&quot;&gt;
+                        &lt;header&gt;
+                            &lt;slot name=&quot;header&quot;&gt;&lt;/slot&gt;
+                        &lt;/header&gt;
+                        &lt;main&gt;
+                            &lt;slot name=&quot;main&quot;&gt;&lt;/slot&gt;
+                        &lt;/main&gt;
+                        &lt;footer&gt;
+                            &lt;slot name=&quot;footer&quot;&gt;&lt;/slot&gt;
+                        &lt;/footer&gt;
+                    &lt;/div&gt;
+                `
+            };
+        &lt;/script&gt;
+    &lt;/head&gt;
+&lt;/html&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-utiliser-un-composant-avec-plusieurs-slots" class="anchor" href="#utiliser-un-composant-avec-plusieurs-slots" aria-hidden="true"></a>Utiliser un composant avec plusieurs slots</h4>
+<p><a href="https://vuejs.org/v2/api/#v-slot">v-slot</a></p>
+<pre><code class="language-html">&lt;base-layout&gt;
+    &lt;template v-slot:header&gt;
+        &lt;h1&gt;Here might be a page title&lt;/h1&gt;
+    &lt;/template&gt;
+
+    &lt;template v-slot:main&gt;
+        &lt;p&gt;A paragraph for the main content.&lt;/p&gt;
+        &lt;p&gt;And another one.&lt;/p&gt;
+    &lt;/template&gt;
+
+    &lt;template v-slot:footer&gt;
+        &lt;p&gt;Here's some contact info&lt;/p&gt;
+    &lt;/template&gt;
+&lt;/base-layout&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h3><a id="user-content-le-cycle-de-vie-dun-composant-simplifié" class="anchor" href="#le-cycle-de-vie-dun-composant-simplifié" aria-hidden="true"></a>Le cycle de vie d’un composant (simplifié)</h3>
+<p><a href="https://vuejs.org/v2/guide/instance.html#Lifecycle-Diagram">lifecycle</a></p>
+<img src="images/lifecycle.png">
+            </section>
+        
+            <section >
+                <h3><a id="user-content-définir-un-hook" class="anchor" href="#définir-un-hook" aria-hidden="true"></a>Définir un hook</h3>
+<p><a href="https://vuejs.org/v2/api/#Options-Lifecycle-Hooks">hooks</a></p>
+<pre><code class="language-javascript">const myComponent = {
+    data: function() {
+        return {
+            ...
+        }
+    },
+
+    // Les hooks sont définis directement dans le composant
+    beforeMount() {
+        ...
+    },
+
+    mounted() {
+        ...
+    },
+
+    template: '...',
+
+};
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h3><a id="user-content-labs-2" class="anchor" href="#labs-2" aria-hidden="true"></a>Labs</h3>
+<img src="images/lab.png">
+            </section>
+        
+            <section >
+                <h3><a id="user-content-lab0301" class="anchor" href="#lab0301" aria-hidden="true"></a>lab/03/01</h3>
+<h4><a id="user-content-application-modularisée-en-composants" class="anchor" href="#application-modularisée-en-composants" aria-hidden="true"></a>Application modularisée en composants</h4>
+<pre><code class="language-md">- L'application (app.js) contient 3 composants
+    - catalog
+        - responsable pour afficher le catalogue
+        - responsable pour ajouter un article
+
+    - cart
+        - Responsable pour afficher les articles du panier
+        - Responsable pour supprimer un article du panier
+
+    - contact
+        - Responsable du formulaire de contact
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h3><a id="user-content-lab0301-1" class="anchor" href="#lab0301-1" aria-hidden="true"></a>lab/03/01</h3>
+<h4><a id="user-content-composant-catalog" class="anchor" href="#composant-catalog" aria-hidden="true"></a>Composant catalog</h4>
+<pre><code class="language-md">- Passer la donnée 'categories' de app vers le composant catalog (props)
+    - Vérifier que les listes fonctionnent
+
+
+- Implémenter la fonction emitAddToCart
+    - pour émettre un événement 'add-to-cart'
+    - passer l'article à ajouter dans l'événement
+    - Modifier dans app pour écouter l'événement et appeler la fonction addToCart
+    - Vérifier avec la console que l'objet cart se rempli comme prévu
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h3><a id="user-content-lab0301-2" class="anchor" href="#lab0301-2" aria-hidden="true"></a>lab/03/01</h3>
+<h4><a id="user-content-composant-cart" class="anchor" href="#composant-cart" aria-hidden="true"></a>Composant cart</h4>
+<pre><code class="language-md">- Passer la donnée 'cart' de app vers le composant cart (props)
+    - Vérifier que l'ajout / suppression au panier fonctionne
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h3><a id="user-content-lab0301-3" class="anchor" href="#lab0301-3" aria-hidden="true"></a>lab/03/01</h3>
+<h4><a id="user-content-composant-contact" class="anchor" href="#composant-contact" aria-hidden="true"></a>Composant contact</h4>
+<pre><code class="language-md">- Passer la donnée 'countries' de app vers le composant contact (props)
+    - Vérifier que la liste des pays fonctionne
+
+
+- Implémenter la fonction emitContactChanged
+    - pour émettre un événement 'contact-changed'
+    - passer le contact dans l'événement
+    - Modifier dans app pour écouter l'événement et appeler la fonction onContactChanged
+    - Vérifier que le bouton Payer fonctionne
+</code></pre>
+
+            </section>
+        
+
+    </section>
+    
+
+
+
+    
+    <section>
+        <section >
+            <h2><a id="user-content-module-04" class="anchor" href="#module-04" aria-hidden="true"></a>Module 04</h2>
+<h3><a id="user-content-mise-à-léchelle" class="anchor" href="#mise-à-léchelle" aria-hidden="true"></a>mise à l’échelle</h3>
+
+            </section>
+        
+            <section >
+                <h3><a id="user-content-les-limitations" class="anchor" href="#les-limitations" aria-hidden="true"></a>Les limitations</h3>
+
+            </section>
+        
+            <section >
+                <h3><a id="user-content-maintenabilité-des-templates" class="anchor" href="#maintenabilité-des-templates" aria-hidden="true"></a>Maintenabilité des templates</h3>
+<pre><code class="language-javascript">const MyComponent = {
+
+    template: `
+        &lt;div id=&quot;contact1&quot;&gt;
+            &lt;input name=&quot;firstName&quot;&gt;
+            &lt;input name=&quot;lastName&quot; &gt;
+            &lt;div id=&quot;customDetails&quot;&gt;
+                &lt;div id=&quot;customDetails&quot;&gt;
+                    &lt;input name=&quot;tel&quot;&gt;
+                    &lt;input name=&quot;mail&quot;&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    `
+};
+
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h3><a id="user-content-erreurs-de-syntaxe" class="anchor" href="#erreurs-de-syntaxe" aria-hidden="true"></a>Erreurs de syntaxe</h3>
+<pre><code class="language-javascript">const myData = ['a', 'b', 'c'];
+
+function sortMyData = {
+
+    // Oups... Uncaught ReferenceError : mydata is not defined
+    return mydata.sort();
+}
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h3><a id="user-content-compatibilité-navigateurs" class="anchor" href="#compatibilité-navigateurs" aria-hidden="true"></a>Compatibilité navigateurs</h3>
+<pre><code class="language-javascript">// Ne fonctionne pas sur IE &lt;8
+// Ne fonctionne pas sur Safari &lt; 4
+// Fonctionne partiellement sur certains IE / Firefox / Safari
+// ... :(
+window.postMessage({
+    hello: 'world',
+});
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h3><a id="user-content-qualité-de-code" class="anchor" href="#qualité-de-code" aria-hidden="true"></a>Qualité de code</h3>
+<pre><code class="language-javascript">// varA n'est jamais utilisée et devrait être supprimée
+const varA = 'Hi!';
+
+const varB = 'Hello!' // Il manque un point-virgule à la fin de la ligne
+
+function displayMessage() {
+    return varB.toUpperCase();
+}
+
+// Un formatage ni fait ni à faire...
+    function
+mess
+ { if
+(mess
+        ) {
+console
+.log(
+                'dirty');
+}
+        else {
+console.log(
+'clean');  }    }
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h3><a id="user-content-optimisation-navigateur" class="anchor" href="#optimisation-navigateur" aria-hidden="true"></a>Optimisation navigateur</h3>
+<pre><code class="language-html">&lt;!--
+    Autant de requêtes HTTP que de scripts
+    Chaque composant est un script composé de bytes inutiles (espaces, tabulations...)
+--&gt;
+&lt;script src=&quot;component1.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;component2.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;component3.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;component4.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;component5.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;component6.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;component7.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;component8.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;component9.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;component10.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-des-outils-en-javascript-pour-le-javascript" class="anchor" href="#des-outils-en-javascript-pour-le-javascript" aria-hidden="true"></a>Des outils en JavaScript pour le JavaScript</h4>
+<p>Des outils existent pour palier ces limitations</p>
+<p><br><br>
+Ils sont tous développés en JavaScript</p>
+<p>et fonctionnent sur <a href="https://nodejs.org">Node.js</a></p>
+
+            </section>
+        
+            <section >
+                <h3><a id="user-content-nodejs-et-son-éco-système" class="anchor" href="#nodejs-et-son-éco-système" aria-hidden="true"></a>Node.js et son éco-système</h3>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-quest-ce-que-nodejs-" class="anchor" href="#quest-ce-que-nodejs-" aria-hidden="true"></a>Qu’est-ce que Node.js ?</h4>
+<p><a href="https://nodejs.org">Node.js</a>
+est un environnement d’exécution JavaScript <br>
+en dehors d’un navigateur Web</p>
+<p>Il est basé sur le moteur V8</p>
+<img src="images/nodejs_eventloop.jpg">
+            </section>
+        
+            <section >
+                <h4><a id="user-content-gestionnaire-de-paquets" class="anchor" href="#gestionnaire-de-paquets" aria-hidden="true"></a>Gestionnaire de paquets</h4>
+<p><a href="https://www.npmjs.com/">npm</a></p>
+<p>Node.js inclut un gestionnaire de paquets :<br>
+Node Package Manager (npm)</p>
+<pre><code class="language-bash"># Install express
+npm install express
+
+# Install vue-cli
+npm install -g @vue/cli
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-descripteur-de-dépendances" class="anchor" href="#descripteur-de-dépendances" aria-hidden="true"></a>Descripteur de dépendances</h4>
+<p><a href="https://docs.npmjs.com/files/package.json">package.json</a></p>
+<p>permet de lister les dépendances utilisées par un projet</p>
+<pre><code class="language-json">{
+    &quot;author&quot;: &quot;John Doe&quot;,
+    &quot;license&quot;: &quot;MIT&quot;,
+    &quot;name&quot;: &quot;my-project&quot;,
+    &quot;description&quot;: &quot;A sample Node.js app&quot;,
+    &quot;version&quot;: &quot;1.0.0&quot;,
+    &quot;main&quot;: &quot;index.js&quot;,
+
+    &quot;dependencies&quot;: {
+        &quot;express&quot;: &quot;^4.17.1&quot;
+    },
+
+    &quot;devDependencies&quot;: {
+        &quot;@vue/cli&quot;: &quot;^4.3.1&quot;
+    }
+  }
+}
+</code></pre>
+<pre><code class="language-bash"># Exécuter npm sur un dossier qui contient un fichier package.json
+# Cela va installer toutes les dépendances dans un dossier node_modules/
+npm install
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h3><a id="user-content-eslint" class="anchor" href="#eslint" aria-hidden="true"></a><a href="https://eslint.org/">Eslint</a></h3>
+<img src="images/eslint.png" style="height: 200px;">
+            </section>
+        
+            <section >
+                <h4><a id="user-content-quest-ce-que-eslint-" class="anchor" href="#quest-ce-que-eslint-" aria-hidden="true"></a>Qu’est-ce que Eslint ?</h4>
+<p>Un <strong>linter</strong> de code JavaScript</p>
+<p>Analyse le code de manière statique (pas d’exécution) <br>
+pour vérifier l’application de règles de codage</p>
+<p>Intégré dans les principaux IDE</p>
+<img src="images/eslint.gif" style="height: 350px;">
+            </section>
+        
+            <section >
+                <h3><a id="user-content-babel" class="anchor" href="#babel" aria-hidden="true"></a><a href="https://babeljs.io/">Babel</a></h3>
+<img src="images/babel.png" style="height: 200px;">
+            </section>
+        
+            <section >
+                <h4><a id="user-content-quest-ce-que-babel-" class="anchor" href="#quest-ce-que-babel-" aria-hidden="true"></a>Qu’est-ce que Babel ?</h4>
+<p>Un transpiler : transforme du code Source en… code Source !</p>
+<p><br><br></p>
+<p>Babel permet <br>
+de coder avec les dernières fonctionnalités JS (ES2015 et +) <br>
+et d’obtenir un code utilisable sur tous les navigateurs souhaités !</p>
+<pre><code class="language-javascript">// Exemple : un code utilisant une fonction fléchée     (ES2015)
+[1, 2, 3].map((n) =&gt; n + 1);
+
+// L'équivalent après transpilation par Babel           (ES5)
+[1, 2, 3].map(function(n) {
+  return n + 1;
+});
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h3><a id="user-content-webpack" class="anchor" href="#webpack" aria-hidden="true"></a><a href="https://webpack.js.org/">Webpack</a></h3>
+<img src="images/webpack.png" style="height: 200px;">
+            </section>
+        
+            <section >
+                <h4><a id="user-content-quest-ce-que-webpack-" class="anchor" href="#quest-ce-que-webpack-" aria-hidden="true"></a>Qu’est-ce que Webpack ?</h4>
+<p>Un bundler : il assemble et optimise les ressources statiques:</p>
+<ul>
+<li>Elimination de code mort</li>
+<li>Minification du code JavaScript</li>
+<li>Minification des feuilles de style CSS</li>
+<li>Création des Source Maps</li>
+<li>…</li>
+</ul>
+<img src="images/webpack_bundle.jpg" style="height: 350px;">
+            </section>
+        
+            <section >
+                <h3><a id="user-content-vue-loader" class="anchor" href="#vue-loader" aria-hidden="true"></a><a href="https://github.com/vuejs/vue-loader">Vue-loader</a></h3>
+<img src="images/vuejs_logo.png" style="height: 200px;">
+            </section>
+        
+            <section >
+                <h4><a id="user-content-quest-ce-que-vue-loader-" class="anchor" href="#quest-ce-que-vue-loader-" aria-hidden="true"></a>Qu’est-ce que Vue-loader ?</h4>
+<p>Un loader <strong>Webpack</strong></p>
+<p><br><br>
+qui permet de transformer</p>
+<p>des fichiers <strong>.vue</strong> en fichiers <strong>.js</strong> et  <strong>.css</strong></p>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-quest-ce-quun-fichier-vue-" class="anchor" href="#quest-ce-quun-fichier-vue-" aria-hidden="true"></a>Qu’est-ce qu’un fichier .vue ?</h4>
+<p>Un format permettant d’écrire un composant dans un seul fichier</p>
+<pre><code class="language-vue">&lt;template&gt;
+    &lt;div&gt;
+        &lt;p&gt; {{ greeting }} World!&lt;/p&gt;
+        &lt;other-component&gt;&lt;/other-component&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+    import OtherComponent from './OtherComponent.vue'
+
+    export default {
+        components: {
+            OtherComponent
+        },
+        data () {
+            return {
+                greeting: 'Hello'
+            }
+        }
+    }
+&lt;/script&gt;
+
+&lt;style&gt;
+    p {
+        font-size: 2em;
+    }
+&lt;/style&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h3><a id="user-content-vue-cli" class="anchor" href="#vue-cli" aria-hidden="true"></a><a href="https://cli.vuejs.org/">Vue CLI</a></h3>
+<img src="images/vuejs_logo.png" style="height: 200px;">
+            </section>
+        
+            <section >
+                <h4><a id="user-content-quest-ce-que-vue-cli-" class="anchor" href="#quest-ce-que-vue-cli-" aria-hidden="true"></a>Qu’est-ce que Vue CLI ?</h4>
+<p>Un outil en ligne de commandes <br>
+(Command Line Interface)</p>
+<p>pour créer un nouveau projet <br>
+en répondant à quelques questions <br>
+(boilerplate)</p>
+<img src="images/vue-cli.png">
+            </section>
+        
+            <section >
+                <h4><a id="user-content-installer-vue-cli" class="anchor" href="#installer-vue-cli" aria-hidden="true"></a>Installer Vue CLI</h4>
+<pre><code class="language-bash"># l'option -g permet d'installer le module en global
+# Il va être ajouté au PATH de l'utilisateur
+# Et sera utilisable depuis n'importe où
+npm install -g @vue/cli
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-créer-un-nouveau-projet-avec-vue-cli" class="anchor" href="#créer-un-nouveau-projet-avec-vue-cli" aria-hidden="true"></a>Créer un nouveau projet avec Vue CLI</h4>
+<pre><code class="language-bash">vue create hello-world
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h3><a id="user-content-les-composants-vue" class="anchor" href="#les-composants-vue" aria-hidden="true"></a>Les Composants .vue</h3>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-créer-un-composant-vue" class="anchor" href="#créer-un-composant-vue" aria-hidden="true"></a>Créer un composant .vue</h4>
+<p><a href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Instructions/export">export</a></p>
+<pre><code class="language-vue">&lt;!-- exemple de fichier hello.vue --&gt;
+
+&lt;!-- template contient la template html du composant --&gt;
+&lt;template&gt;
+    &lt;div&gt;
+        &lt;p&gt; {{ greeting }} World!&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;!-- script contient le code JS du composant --&gt;
+&lt;script&gt;
+
+    // Tout le code JS est &quot;exporté&quot;
+    // pour pouvoir être   &quot;importé&quot; par d'autres composants
+    export default {
+        data () {
+            return {
+                greeting: 'Hello';
+            }
+        }
+    }
+&lt;/script&gt;
+
+&lt;!-- style contient la CSS du composant --&gt;
+&lt;style&gt;
+    p {
+        font-size: 2em;
+    }
+&lt;/style&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-utiliser-un-composant-vue" class="anchor" href="#utiliser-un-composant-vue" aria-hidden="true"></a>Utiliser un composant .vue</h4>
+<p><a href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Instructions/import">import</a></p>
+<pre><code class="language-vue">&lt;!-- exemple de fichier app.vue souhaitant utiliser le composant hello.vue --&gt;
+&lt;template&gt;
+    &lt;div&gt;
+        &lt;!-- Utilisation du composant HelloWorld (Attention ! kebab-case !) --&gt;
+        &lt;hello-world&gt;&lt;/hello-world&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+
+    // Le composant HelloWorld.vue est importé
+    import HelloWorld from './HelloWorld.vue';
+
+    export default {
+        components: {
+
+            // Le composant HelloWorld est référencé en tant que sous-composant
+            HelloWorld,
+
+        },
+    }
+&lt;/script&gt;
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h3><a id="user-content-labs-3" class="anchor" href="#labs-3" aria-hidden="true"></a>Labs</h3>
+<img src="images/lab.png">
+            </section>
+        
+            <section >
+                <h3><a id="user-content-lab0401" class="anchor" href="#lab0401" aria-hidden="true"></a>lab/04/01</h3>
+<h4><a id="user-content-installer-lenvironnement-nodejs" class="anchor" href="#installer-lenvironnement-nodejs" aria-hidden="true"></a>Installer L’environnement Node.js</h4>
+<pre><code class="language-md">1. Installer node.js (https://nodejs.org/en/)
+
+
+2. Tester en exécutant la commande `node -v`
+
+
+3. Tester la console nodejs
+    - Exécuter la commande `node`
+    - Puis dans la console node, exécuter `console.log('Coucou !')`
+    - Pour quitter appuyer sur `CTRL+D`
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h3><a id="user-content-lab0402" class="anchor" href="#lab0402" aria-hidden="true"></a>lab/04/02</h3>
+<h4><a id="user-content-installer-vue-cli-1" class="anchor" href="#installer-vue-cli-1" aria-hidden="true"></a>Installer vue-cli</h4>
+<pre><code class="language-md">1. Vérifier que npm fonctionne
+    - `npm -v`
+
+
+2. Installer vue-CLI en global
+    - `npm install -g @vue/cli`
+
+
+3. Tester que le CLI fonctionne
+    - `vue -V`
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h3><a id="user-content-lab0403" class="anchor" href="#lab0403" aria-hidden="true"></a>lab/04/03</h3>
+<h4><a id="user-content-créer-une-nouvelle-application" class="anchor" href="#créer-une-nouvelle-application" aria-hidden="true"></a>Créer une nouvelle application</h4>
+<pre><code class="language-md">1. Ouvrir un terminal sous lab/04
+
+
+2. Créer une nouvelle application &quot;hello&quot; avec vue-CLI
+    - `vue create hello`
+    - default (babel,eslint)
+    - ENTREE
+
+
+3. Déplacer vous sous le répertoire `lab/04/hello` nouvellement créé et exécuter
+    - `npm run serve`
+
+
+4. Ouvrir dans le navigateur l'application Vue créée
+    - http://localhost:8080
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h3><a id="user-content-lab0404" class="anchor" href="#lab0404" aria-hidden="true"></a>lab/04/04</h3>
+<h4><a id="user-content-ajouter-un-composant-chuck-norris" class="anchor" href="#ajouter-un-composant-chuck-norris" aria-hidden="true"></a>Ajouter un composant Chuck Norris</h4>
+<pre><code class="language-md">1. Sous lab/04/hello/src/components
+    - Créer un composant ChuckNorris.vue
+    - Dans la partie &lt;template&gt;
+            &lt;div&gt;
+                &lt;h2&gt;Chuck Norris fact...&lt;/h2&gt;
+            &lt;/div&gt;
+
+
+2. Dans lab/04/hello/src/App.vue
+    - Importer le composant ChuckNorris.vue
+    - Référencer le composant en tant que sous-composant de app
+    - Insérer le composant &lt;chuck-norris /&gt; au dessus du composant &lt;HelloWorld&gt;
+
+
+3. Vérifier que cela fonctionne
+    - vue-serve doit afficher `Compiled successfully in ...ms`
+    - rafraichir le navigateur et vérifier que Chuck Norris s'affiche</code></pre>
+
+            </section>
+        
+            <section >
+                <h3><a id="user-content-lab0405" class="anchor" href="#lab0405" aria-hidden="true"></a>lab/04/05</h3>
+<h4><a id="user-content-implémenter-le-composant-chuck-norris" class="anchor" href="#implémenter-le-composant-chuck-norris" aria-hidden="true"></a>Implémenter le composant Chuck Norris</h4>
+<pre><code class="language-md">1. Copier le fichier lab/04/facts.js 
+    - sous lab/04/hello/src/facts.js
+
+
+2. Copier le fichier lab/04/chuck_norris.jpg
+    - sous lab/04/hello/src/assets/chuck_norris.jpg
+
+
+3. Importer les facts dans app.vue
+    - `import facts from &quot;./facts&quot;;`
+
+
+3. Modifier pour passer les facts au composant ChuckNorris
+    - passer les facts sous forme de `props` de app vers ChuckNorris
+
+
+4. Modifier le composant ChuckNorris pour afficher un fact au hasard
+    - Utiliser le hook `created`
+        - prendre un fact au hasard :
+        - `this.facts[Math.floor(Math.random() * this.facts.length)]`
+    - Afficher le fact et l'image de Chuck Norris
+    &lt;div&gt;
+        &lt;img src=&quot;../assets/chuck_norris.jpg&quot; /&gt;
+        &lt;br&gt;
+        &lt;h2&gt;{{ fact }}&lt;/h2&gt;
+    &lt;/div&gt;
+
+
+5. Supprimer le composant HelloWorld de la page</code></pre>
+
+            </section>
+        
+
+    </section>
+    
+
+
+
+    
+        <section >
+            
+            <h3><a id="user-content-the-end" class="anchor" href="#the-end" aria-hidden="true"></a>The end</h3>
+<img src="images/questions.jpg" style="height:400px;">
+            </section>
+    
+
+
+    </div>
+
+
+  </div>
+
+  <script src="libs/reveal.js/3.8.0/lib/js/head.min.js"></script>
+  <script src="libs/reveal.js/3.8.0/js/reveal.js"></script>
+
+  <script>
+
+    // More info https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+
+        controls: true,
+        controlsTutorial: true,
+        controlsLayout: 'bottom-right',
+        controlsBackArrows: 'faded',
+        progress: true,
+        slideNumber: false,
+        history: true,
+        keyboard: true,
+        overview: true,
+        center: true,
+        touch: true,
+        loop: false,
+        rtl: false,
+        shuffle: false,
+        fragments: true,
+        fragmentInURL: false,
+        embedded: false,
+        help: true,
+        showNotes: false,
+        autoPlayMedia: false,
+        autoSlide: 0,
+        autoSlideStoppable: true,
+        autoSlideMethod: Reveal.navigateNext,
+        defaultTiming: 120,
+        mouseWheel: false,
+        hideAddressBar: true,
+        previewLinks: false,
+        transition: 'slide',
+        transitionSpeed: 'default',
+        backgroundTransition: 'default',
+        viewDistance: 3,
+        parallaxBackgroundImage: '',
+        parallaxBackgroundSize: '',
+        parallaxBackgroundHorizontal: 0,
+        parallaxBackgroundVertical: 0,
+        display: 'block',
+
+        // More info https://github.com/hakimel/reveal.js#dependencies
+        dependencies: [
+            // { src: 'libs/reveal.js/3.8.0/lib/js/classList.js', condition: function () { return !document.body.classList; } },
+            // { src: 'libs/reveal.js/3.8.0/plugin/markdown/marked.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
+            // { src: 'libs/reveal.js/3.8.0/plugin/markdown/markdown.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
+            // { src: 'libs/reveal.js/3.8.0/plugin/highlight/highlight.js', async: true, callback: function () { hljs.initHighlightingOnLoad(); } },
+            { src: 'libs/reveal.js/3.8.0/plugin/notes/notes.js', async: true },
+            { src: 'libs/reveal.js/3.8.0/plugin/chart/Chart.min.js' },
+            { src: 'libs/reveal.js/3.8.0/plugin/chart/csv2chart.js' },
+            { src: 'libs/reveal.js/3.8.0/plugin/embed-tweet/embed-tweet.js' },
+            { src: 'libs/reveal.js/3.8.0/plugin/math/math.js', async: true },
+            { src: 'libs/highlight.js/9.12.0/highlight.js', async: true },
+            { src: 'libs/reveal.js/3.8.0/plugin/anything/anything.js' },
+            { src: 'libs/reveal.js/3.8.0/plugin/mermaid/mermaid.min.js', async: true, callback: function() {mermaid.initialize({startOnLoad:false})} },	
+
+           
+        { src: 'libs/reveal.js/3.8.0/plugin/search/search.js', async: true },
+           
+
+           
+        { src: 'libs/reveal.js/3.8.0/plugin/zoom-js/zoom.js', async: true },
+            
+
+            
+        { src: 'libs/reveal.js/3.8.0/plugin/chalkboard/chalkboard.js' },
+            
+
+            
+        { src: 'libs/reveal.js/3.8.0/plugin/menu/menu.js' },
+            
+
+            
+        { src: 'libs/reveal.js/3.8.0/plugin/title-footer/title-footer.js', async: true, callback: function () { title_footer.initialize(); } },
+            
+
+        {
+            src: 'libs/highlight.js/9.12.0/reveal-code-focus-1.0.0-mod.js',
+            async: true,
+            callback: function () {
+                RevealCodeFocus();
+            }
+        },
+            // { src: 'libs/reveal.js/3.8.0/plugin/reveal-code-focus/highlight.pack.js' },
+            // { src: 'libs/reveal.js/3.8.0/plugin/reveal-code-focus/reveal-code-focus.js', async: true, callback: function() { RevealCodeFocus(); } },
+           // {src: 'libs/reveal.js/3.8.0/plugin/line-numbers/line-numbers.js'}
+        ]
+        ,
+    keyboard: {
+        67: function () { RevealChalkboard.toggleNotesCanvas() },	// toggle notes canvas when 'c' is pressed
+        66: function () { RevealChalkboard.toggleChalkboard() },	// toggle chalkboard when 'b' is pressed
+        46: function () { RevealChalkboard.clear() },	// clear chalkboard when 'DEL' is pressed
+        8: function () { RevealChalkboard.reset() },	// reset chalkboard data on current slide when 'BACKSPACE' is pressed
+        68: function () { RevealChalkboard.download() },	// downlad recorded chalkboard drawing when 'd' is pressed
+    },
+    math: {
+       // mathjax: 'libs/reveal.js/3.8.0/plugin/math/MathJax.js',
+             mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+            config: 'TeX-AMS_HTML-full'
+    },
+    chart: {
+        defaults: {
+            global: {
+                title: { fontColor: "#FFF" },
+                legend: {
+                    position: "bottom",
+                        labels: { fontColor: "#FFF" },
+                },
+                tooltips: {
+                    labels: { fontColor: "#FFF" },
+                },
+            },
+            scale: {
+                scaleLabel: { fontColor: "#FFF" },
+                gridLines: { color: "#FFF", zeroLineColor: "#FFF" },
+                ticks: { fontColor: "#FFF" },
+            }
+        },
+        line: { borderColor: ["rgba(20,220,220,.8)", "rgba(220,120,120,.8)", "rgba(20,120,220,.8)"], "borderDash": [[5, 10], [0, 0]] },
+        bar: { backgroundColor: ["rgba(20,220,220,.8)", "rgba(220,120,120,.8)", "rgba(20,120,220,.8)"] },
+        pie: { backgroundColor: [["rgba(0,0,0,.8)", "rgba(220,20,20,.8)", "rgba(20,220,20,.8)", "rgba(220,220,20,.8)", "rgba(20,20,220,.8)"]] },
+        radar: { borderColor: ["rgba(20,220,220,.8)", "rgba(220,120,120,.8)", "rgba(20,120,220,.8)"] },
+    },
+    anything: [ 
+	 {
+	  className: "mermaid"
+	 },
+	 // ...
+	],
+    menu: {
+        // Specifies which side of the presentation the menu will 
+        // be shown. Use 'left' or 'right'.
+        side: 'left',
+
+            // Specifies the width of the menu.
+            // Can be one of the following:
+            // 'normal', 'wide', 'third', 'half', 'full', or
+            // any valid css length value
+            width: 'normal',
+
+                // Add slide numbers to the titles in the slide list.
+                // Use 'true' or format string (same as reveal.js slide numbers)
+                numbers: false,
+
+                    // Specifies which slide elements will be used for generating
+                    // the slide titles in the menu. The default selects the first
+                    // heading element found in the slide, but you can specify any
+                    // valid css selector and the text from the first matching
+                    // element will be used.
+                    // Note: that a section data-menu-title attribute or an element
+                    // with a menu-title class will take precedence over this option
+                    titleSelector: 'h1, h2, h3, h4, h5, h6',
+
+                        // If slides do not have a matching title, attempt to use the
+                        // start of the text content as the title instead
+                        useTextContentForMissingTitles: false,
+
+                            // Hide slides from the menu that do not have a title.
+                            // Set to 'true' to only list slides with titles.
+                            hideMissingTitles: false,
+
+                                // Adds markers to the slide titles to indicate the 
+                                // progress through the presentation. Set to 'false'
+                                // to hide the markers.
+                                markers: true,
+
+                                    // Specify custom panels to be included in the menu, by
+                                    // providing an array of objects with 'title', 'icon'
+                                    // properties, and either a 'src' or 'content' property.
+                                    // custom: false,
+                                    custom: [],
+                                        // Specifies the themes that will be available in the themes
+                                        // menu panel. Set to 'true' to show the themes menu panel
+                                        // with the default themes list. Alternatively, provide an
+                                        // array to specify the themes to make available in the
+                                        // themes menu panel, for example...
+                                        // [
+                                        //     { name: 'Black', theme: 'css/theme/black.css' },
+                                        //     { name: 'White', theme: 'css/theme/white.css' },
+                                        //     { name: 'League', theme: 'css/theme/league.css' }
+                                        // ]
+                                        themes: false,
+
+                                            // Specifies the path to the default theme files. If your
+                                            // presentation uses a different path to the standard reveal
+                                            // layout then you need to provide this option, but only
+                                            // when 'themes' is set to 'true'. If you provide your own 
+                                            // list of themes or 'themes' is set to 'false' the 
+                                            // 'themesPath' option is ignored.
+                                            themesPath: 'css/theme/',
+
+                                                // Specifies if the transitions menu panel will be shown.
+                                                // Set to 'true' to show the transitions menu panel with
+                                                // the default transitions list. Alternatively, provide an
+                                                // array to specify the transitions to make available in
+                                                // the transitions panel, for example...
+                                                // ['None', 'Fade', 'Slide']
+                                                transitions: false,
+
+                                                    // Adds a menu button to the slides to open the menu panel.
+                                                    // Set to 'false' to hide the button.
+                                                    openButton: true,
+
+                                                        // If 'true' allows the slide number in the presentation to
+                                                        // open the menu panel. The reveal.js slideNumber option must 
+                                                        // be displayed for this to take effect
+                                                        openSlideNumber: false,
+
+                                                            // If true allows the user to open and navigate the menu using
+                                                            // the keyboard. Standard keyboard interaction with reveal
+                                                            // will be disabled while the menu is open.
+                                                            keyboard: true,
+
+                                                                // Normally the menu will close on user actions such as
+                                                                // selecting a menu item, or clicking the presentation area.
+                                                                // If 'true', the sticky option will leave the menu open
+                                                                // until it is explicitly closed, that is, using the close
+                                                                // button or pressing the ESC or m key (when the keyboard 
+                                                                // interaction option is enabled).
+                                                                sticky: false,
+
+                                                                    // If 'true' standard menu items will be automatically opened
+                                                                    // when navigating using the keyboard. Note: this only takes 
+                                                                    // effect when both the 'keyboard' and 'sticky' options are enabled.
+                                                                    autoOpen: true,
+
+                                                                        // If 'true' the menu will not be created until it is explicitly
+                                                                        // requested by calling RevealMenu.init(). Note this will delay
+                                                                        // the creation of all menu panels, including custom panels, and
+                                                                        // the menu button.
+                                                                        delayInit: false,
+
+                                                                            // If 'true' the menu will be shown when the menu is initialised.
+                                                                            openOnInit: false,
+
+                                                                                // By default the menu will load it's own font-awesome library
+                                                                                // icons. If your presentation needs to load a different
+                                                                                // font-awesome library the 'loadIcons' option can be set to false
+                                                                                // and the menu will not attempt to load the font-awesome library.
+                                                                                loadIcons: false
+    },
+    chalkboard: {
+        toggleChalkboardButton: { left: "60px", bottom: "30px", top: "auto", right: "auto" },
+        toggleNotesButton: { left: "90px", bottom: "30px", top: "auto", right: "auto" },
+
+    }
+    });
+
+
+
+</script>
+</body>
+
+</html>
