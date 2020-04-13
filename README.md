@@ -22,3 +22,6 @@ La présentation [reveal.js](https://revealjs.com/#/) est réalisée grace à l'
 Les corrections d'exercice sont chiffrées par [ccrypt](http://ccrypt.sourceforge.net/).
 
 Le formateur pourra les chiffrer/déchiffrer grace aux scripts fournis ([voir ici](lab_correction/README.md))
+
+### Tous droits réservés
+Toute utilisation de ce dépôt à des fins d'enseignement ou de formation exige l'accord préalable de l'auteur.
