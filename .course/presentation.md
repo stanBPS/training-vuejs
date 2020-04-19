@@ -1919,7 +1919,7 @@ on utilise toujours
     <body>
         <div id="app">
             <my-component v-on:my-custom-event="displayMessage"></my-component>
-            <my-component      my-custom-event="displayMessage"></my-component>
+            <my-component     @my-custom-event="displayMessage"></my-component>
         </div>
     </body>
 </html>
