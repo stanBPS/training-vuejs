@@ -2821,7 +2821,7 @@ Vue.use(VueRouter);
     
     <h1>Hello App!</h1>
 
-    <div id="footer">...</div>
+    <div id="header">...</div>
 
     <!-- Le routeur va rendre les "vues" ici -->
     <router-view></router-view>
@@ -2839,7 +2839,7 @@ Vue.use(VueRouter);
 // On importe les composants Vue.js souhaités
 import Page1 from './pages/Page1.vue';
 import Page2 from './pages/Page2.vue';
-import Page3 from './pages/Page2.vue';
+import Page3 from './pages/Page3.vue';
 
 // On associe les composants aux routes (URI Http)
 const myRoutes = [
