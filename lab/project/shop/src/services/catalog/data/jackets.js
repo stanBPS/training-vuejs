@@ -1,0 +1,102 @@
+export default {
+    id: 'jackets',
+    label: 'Vestes',
+    items: [
+        {
+            label: 'Brown Fox',
+            brand: 'Redskins',
+            sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+            unitPrice: 199.9,
+        },
+        {
+            label: 'Magic Dust',
+            brand: 'Levis',
+            sizes: ['S', 'M', 'L', 'XL'],
+            unitPrice: 99.9,
+        },
+        {
+            label: 'CW',
+            brand: 'Jott',
+            sizes: ['S', 'M', 'L', 'XXL'],
+            unitPrice: 129.9,
+        },
+        {
+            label: 'Flutter',
+            brand: 'Levis',
+            sizes: ['S', 'M', 'XL', 'XXL'],
+            unitPrice: 119.9,
+        },
+        {
+            label: 'Urban Grey',
+            brand: 'Wave',
+            sizes: ['L', 'XL', 'XXL'],
+            unitPrice: 79.9,
+        },
+        {
+            label: 'Mountain views',
+            brand: 'Jott',
+            sizes: ['M', 'L'],
+            unitPrice: 149.9,
+        },
+        {
+            label: 'Crossroad',
+            brand: 'Puma',
+            sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+            unitPrice: 99.9,
+        },
+        {
+            label: 'Bluestark',
+            brand: 'Wave',
+            sizes: ['S', 'M', 'L', 'XL'],
+            unitPrice: 89.9,
+        },
+        {
+            label: 'Smells like teen spirit',
+            brand: 'Levis',
+            sizes: ['S', 'M', 'L'],
+            unitPrice: 99.9,
+        },
+        {
+            label: 'City hopper',
+            brand: 'Redskins',
+            sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+            unitPrice: 189.9,
+        },
+        {
+            label: 'Casual Line',
+            brand: 'Tommy Hilfiger',
+            sizes: ['M', 'L', 'XL'],
+            unitPrice: 169.9,
+        },
+        {
+            label: 'D12',
+            brand: 'Diesel',
+            sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+            unitPrice: 119.9,
+        },
+        {
+            label: 'Aviator',
+            brand: 'Redskins',
+            sizes: ['S', 'M', 'XXL'],
+            unitPrice: 229.9,
+        },
+        {
+            label: 'Solo X',
+            brand: 'Guess',
+            sizes: ['S', 'M'],
+            unitPrice: 109.9,
+        },
+        {
+            label: 'Bomber Z',
+            brand: 'Diesel',
+            sizes: ['L', 'XL', 'XXL'],
+            unitPrice: 99.9,
+        },
+        {
+            label: 'Solo Y',
+            brand: 'Guess',
+            sizes: ['S', 'M', 'L'],
+            unitPrice: 119.9,
+        },
+    ],
+};

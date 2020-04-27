@@ -3240,6 +3240,521 @@ describe('Testing Acme.com', () => {
 
 ---
 
+## Projet
+### Créer une boutique de e-commerce
+
+<img src="images/project/home.png" height="600px">
+
+--
+
+### La stack technique
+
+- Application créée avec [Vue-CLI](https://cli.vuejs.org/)
+- Gestion des pages avec [Vue-Router](https://router.vuejs.org/)
+- Composants graphiques avec [Vuetify](https://vuetifyjs.com/en/)
+- Formattage de code avec [Eslint](https://eslint.org/) + [Prettier](https://prettier.io/)
+- Tests Unitaires avec [Jest](https://jestjs.io/)
+- Tests E2E avec [Cypress](https://www.cypress.io/)
+
+--
+
+### La structure du projet
+
+```yaml
++ node_modules          # les dépendances JS
+
++ public                # les ressources publiques (les images)
+
++ src                   # les sources (composants Vue et code JS)
+    + assets            # les ressource statiques (index.html, favicon)
+    + components        # les composants Vue
+        - AppFooter.vue # le footer
+        - AppTopBar.vue # le header
+    + plugins           # les plugins
+        - vuetify.js    # la configuration de vuetify
+    + router            # le routeur
+        - index.js      # la configuration du routeur (les routes)
+    + services          # les services métier
+        + cart
+            - index.js  # le service de gestion du panier
+        + catalog
+            - index.js  # le service de gestion du catalogue
+    + views             # les pages
+        - Home.vue      # la page d'accueil
+        - NotFound.vue  # la page 404
+    - App.vue           # Le composant racine de l'application (définit le layout)
+main.js                 # l'instanciation de l'app (pas de raison d'y toucher)
+
++ tests                 # les tests
+    + e2e               # les tests Cypress
+    + unit              # les tests Jest
+```
+
+--
+
+Les commandes
+
+```bash
+# Installer les dépendances de l'application
+npm install
+
+# Démarrer l'application en mode dev (http://localhost:8080)
+npm run serve
+
+# Exécuter le linter
+npm run lint
+
+# Packager l'application pour la production
+npm run build
+
+# Lancer les tests Jest
+npm run test:unit
+
+# Lancer les tests Cypress
+npm run test:e2e
+```
+
+--
+
+### Le layout
+
+<img src="images/project/layout.png" style="height: 500px">
+
+```md
+- AppTopBar   : Composant avec la navigation et l'accès au panier
+
+
+- router-view : Les différentes pages
+
+
+- AppFooter   : Le pied de page
+```
+
+--
+
+### Les pages
+
+```md
+- /                         La page d'accueil
+
+
+
+
+- /catalog/:category        La liste des articles d'une catégorie
+
+
+    - /catalog/category/shoes
+
+
+    - /catalog/category/t-shirts
+
+
+    - /catalog/category/jackets
+
+
+
+
+- /checkout                 Le formulaire de commande
+
+
+
+
+- /checkout/success         Page de succès quand la commande est validée
+```
+
+--
+
+### Les modèles
+
+--
+
+#### Une catégorie (category)
+```json
+{
+    "id": "jackets",
+
+    "label": "Vestes",
+
+    "image": "catalog/jackets/0.jpg"
+
+}
+```
+
+--
+
+#### Un article (item)
+```json
+{
+    "id": "shoes_0",
+
+    "label": "Supreme Greeny",
+
+    "brand": "Nike",
+
+    "categoryId": "shoes",
+
+    "image": "catalog/shoes/0.jpg",  
+
+    "sizes": ["39", "43", "44", "45", "46"],
+
+    "unitPrice": 59.9
+}
+```
+
+--
+
+#### Le panier (cart)
+```json
+{
+    "items": [
+        {
+            "id": "shoes_0",
+
+            "label": "Supreme Greeny",
+
+            "brand": "Nike",
+
+            "categoryId": "shoes",
+
+            "image": "catalog/shoes/0.jpg",
+
+            "sizes": ["39", "43", "44", "45", "46"],
+
+            "unitPrice": 59.9,
+
+            "quantity": 3,
+
+            "size": "43"
+        }
+    ]
+}
+```
+
+--
+
+### Les services
+
+--
+
+#### services/cart/index.js
+
+```javascript
+// Retourne le contenu du panier
+cartService.cart;
+
+
+// Ajoute un article au panier
+cartService.addToCart(item);
+
+
+// Incrémente la quantité d'un article du panier
+cartService.incrementCartItem(itemId);
+
+
+// Décrémente la quantité d'un article du panier
+cartService.decrementCartItem(itemId);
+
+
+// Vide le panier
+cartService.emptyCart();
+```
+
+--
+
+#### services/catalog/index.js
+
+```javascript
+// Retourne toutes les catégories de la boutique
+// (fonction async)
+await catalogService.getCategories();
+[
+    { "id": "jackets",  "label": "Vestes",     "image": "catalog/jackets/0.jpg"  },
+    { "id": "t-shirts", "label": "T-shirts",   "image": "catalog/t-shirts/0.jpg" },
+    { "id": "shoes",    "label": "Chaussures", "image": "catalog/shoes/0.jpg"    }
+]
+
+// Retourne une catégorie et les articles associés
+// (fonction async)
+await cartService.getCategory(categoryId);
+{
+    "id":       "shoes",
+    "label":    "Chaussures",
+    "image":    "catalog/shoes/0.jpg",
+    "items": [
+        {
+            "id":           "shoes_0",
+            "label":        "Supreme Greeny",
+            "brand":        "Nike",
+            "categoryId":   "shoes",
+            "image":        "catalog/shoes/0.jpg",
+            "sizes":        ["39", "43", "44", "45", "46"],
+            "unitPrice":    59.9
+        }
+    ]
+}
+```
+
+--
+
+### Travaux à réaliser
+
+--
+
+#### La Page d'accueil
+
+```md
+- Compléter pour afficher la liste des catégories (chaussures, t-shirts...)  avec
+
+
+    - Le nom de la catégorie
+
+    - La photo de la catégorie
+```
+
+--
+
+#### Le catalogue (initialisation)
+
+```md
+- Créer une nouvelle vue pour afficher le catalogue
+
+
+- Configurer le routeur pour la rendre accessible (/catalog/:categoryId)
+
+
+- Modifier la page d'accueil pour naviguer vers le catalogue
+```
+
+--
+
+#### Le catalogue (affichage des articles)
+
+```md
+- Afficher les articles avec
+
+
+    - Le nom de l'article
+
+
+    - La marque de l'article
+
+
+    - La photo de l'article
+
+
+    - La liste des tailles disponibles
+
+
+    - Un bouton d'ajout au panier qui ajoute l'article au panier
+```
+
+--
+
+#### Le catalogue (filtre et tri)
+
+```md
+- Ajouter une liste de choix des marques disponibles
+
+
+- Ajouter une liste de choix des tailles disponibles
+
+
+- Ajouter un bouton pour trier les articles par prix croissant
+
+
+- Ajouter un bouton pour trier les articles par prix décroissant
+
+
+- Afficher le nombre d'articles corresponsant aux critères
+
+
+- Afficher un message quand aucun article ne répond aux critères de recherche
+```
+
+--
+
+#### Le panier (affichage)
+
+```md
+- Afficher sur le bouton d'ouverture du panier
+ 
+    - le nombre d'articles dans le panier
+
+
+- Afficher un message quand la panier est vide
+
+
+- Afficher chaque article du panier
+
+
+    - Nom, marque et taille
+
+
+    - Quantité
+
+
+    - Le prix total de l'article
+
+
+- Afficher le total du panier
+
+--
+
+#### Le panier (édition)
+
+```md
+- Ajouter pour chaque article
+
+
+    - un bouton pour incrémenter la quantité
+
+
+    - un bouton pour décrémenter la quantité
+ 
+
+- Ajouter un bouton "Vider la panier"
+
+
+- Ajouter un bouton "Commander" qui redirigera vers la page de paiement
+```
+
+--
+
+#### La commande (initialisation)
+
+```md
+- Créer une nouvelle vue pour afficher la page de commande
+
+
+- Configurer le routeur pour la rendre accessible
+
+
+- Modifier le panier pour naviguer vers la commande
+
+
+- Masquer l'accès au panier (en haut à droite)
+    (pour éviter qu'il ne soit modifié
+    lorsque l'utilisateur est sur la page de la commande)
+```
+
+--
+
+#### La commande (panier)
+
+```md
+- Afficher le récapitulatif du panier (non modifiable)
+```
+
+--
+
+#### La commande (livraison)
+
+```md
+- Afficher un formulaire de livraison permettant la saisie de :
+
+
+    - Prénom
+
+
+    - Nom
+
+
+    - Adresse
+
+
+    - Code postal
+
+
+    - Ville
+```
+
+--
+
+#### La commande (paiement)
+
+```md
+- Afficher un formulaire de paiement permettant la saisie de :
+
+
+    - Numéro de Carte Bancaire
+
+
+    - Date d'expiration de la carte
+
+
+    - CVC (Card Validation Code)
+```
+
+--
+
+#### La commande (validation)
+
+```md
+- Implémenter un bouton de paiement accessible uniquement si
+
+
+    - Tous les champs de livraison sont renseignés
+
+
+    - Tous les champs de paiement sont renseignés
+
+
+- Le clic sur le bouton vide le panier
+```
+
+--
+
+#### Le message de succès suite à la commande
+
+```md
+- Créer une nouvelle vue pour afficher la page de succès
+
+    - Avec un lien de retour vers la page d'accueil
+
+
+- Configurer le routeur pour la rendre accessible
+
+
+- Modifier le bouton payer pour naviguer vers la page de succès
+```
+
+--
+
+#### Grille d'évaluation
+```yaml
+Modification Page d'accueil                         # 1
+
+Catalogue
+	Init                                        # 1
+	Affichage articles                          # 3
+	Filtre et tri                               # 3
+
+Panier
+	Affichage                                   # 2
+	Edition                                     # 2
+		
+Commande
+	Init                                        # 1
+	Récapitulatif panier                        # 1
+	Formulaire livraison                        # 2
+	Formulaire paiement                         # 1
+	Bouton payer                                # 1
+	
+Message félicitation                                # 1
+
+Qualité de code & approche composants               # 1
+
+--------------------------------------------------------
+Total                                              # 20
+--------------------------------------------------------
+
+Bonus
+    Expérience Utilisateur                          # +1
+    Tests                                           # +1
+```
+
+---
+
 ### The end
 
 <img src="images/questions.jpg" style="height:400px;">

@@ -3508,6 +3508,514 @@ describe('Hello', () =&gt; {
 
 
     
+    <section>
+        <section >
+            <h2><a id="user-content-projet" class="anchor" href="#projet" aria-hidden="true"></a>Projet</h2>
+<h3><a id="user-content-créer-une-boutique-de-e-commerce" class="anchor" href="#créer-une-boutique-de-e-commerce" aria-hidden="true"></a>Créer une boutique de e-commerce</h3>
+<img src="images/project/home.png" height="600px">
+            </section>
+        
+            <section >
+                <h3><a id="user-content-la-stack-technique" class="anchor" href="#la-stack-technique" aria-hidden="true"></a>La stack technique</h3>
+<ul>
+<li>Application créée avec <a href="https://cli.vuejs.org/">Vue-CLI</a></li>
+<li>Gestion des pages avec <a href="https://router.vuejs.org/">Vue-Router</a></li>
+<li>Composants graphiques avec <a href="https://vuetifyjs.com/en/">Vuetify</a></li>
+<li>Formattage de code avec <a href="https://eslint.org/">Eslint</a> + <a href="https://prettier.io/">Prettier</a></li>
+<li>Tests Unitaires avec <a href="https://jestjs.io/">Jest</a></li>
+<li>Tests E2E avec <a href="https://www.cypress.io/">Cypress</a></li>
+</ul>
+
+            </section>
+        
+            <section >
+                <h3><a id="user-content-la-structure-du-projet" class="anchor" href="#la-structure-du-projet" aria-hidden="true"></a>La structure du projet</h3>
+<pre><code class="language-yaml">+ node_modules          # les dépendances JS
+
++ public                # les ressources publiques (les images)
+
++ src                   # les sources (composants Vue et code JS)
+    + assets            # les ressource statiques (index.html, favicon)
+    + components        # les composants Vue
+        - AppFooter.vue # le footer
+        - AppTopBar.vue # le header
+    + plugins           # les plugins
+        - vuetify.js    # la configuration de vuetify
+    + router            # le routeur
+        - index.js      # la configuration du routeur (les routes)
+    + services          # les services métier
+        + cart
+            - index.js  # le service de gestion du panier
+        + catalog
+            - index.js  # le service de gestion du catalogue
+    + views             # les pages
+        - Home.vue      # la page d'accueil
+        - NotFound.vue  # la page 404
+    - App.vue           # Le composant racine de l'application (définit le layout)
+main.js                 # l'instanciation de l'app (pas de raison d'y toucher)
+
++ tests                 # les tests
+    + e2e               # les tests Cypress
+    + unit              # les tests Jest
+</code></pre>
+
+            </section>
+        
+            <section >
+                <p>Les commandes</p>
+<pre><code class="language-bash"># Installer les dépendances de l'application
+npm install
+
+# Démarrer l'application en mode dev (http://localhost:8080)
+npm run serve
+
+# Exécuter le linter
+npm run lint
+
+# Packager l'application pour la production
+npm run build
+
+# Lancer les tests Jest
+npm run test:unit
+
+# Lancer les tests Cypress
+npm run test:e2e
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h3><a id="user-content-le-layout" class="anchor" href="#le-layout" aria-hidden="true"></a>Le layout</h3>
+<img src="images/project/layout.png" style="height: 500px">
+<pre><code class="language-md">- AppTopBar   : Composant avec la navigation et l'accès au panier
+
+
+- router-view : Les différentes pages
+
+
+- AppFooter   : Le pied de page
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h3><a id="user-content-les-pages" class="anchor" href="#les-pages" aria-hidden="true"></a>Les pages</h3>
+<pre><code class="language-md">- /                         La page d'accueil
+
+
+
+
+- /catalog/:category        La liste des articles d'une catégorie
+
+
+    - /catalog/category/shoes
+
+
+    - /catalog/category/t-shirts
+
+
+    - /catalog/category/jackets
+
+
+
+
+- /checkout                 Le formulaire de commande
+
+
+
+
+- /checkout/success         Page de succès quand la commande est validée
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h3><a id="user-content-les-modèles" class="anchor" href="#les-modèles" aria-hidden="true"></a>Les modèles</h3>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-une-catégorie-category" class="anchor" href="#une-catégorie-category" aria-hidden="true"></a>Une catégorie (category)</h4>
+<pre><code class="language-json">{
+    &quot;id&quot;: &quot;jackets&quot;,
+
+    &quot;label&quot;: &quot;Vestes&quot;,
+
+    &quot;image&quot;: &quot;catalog/jackets/0.jpg&quot;
+
+}
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-un-article-item" class="anchor" href="#un-article-item" aria-hidden="true"></a>Un article (item)</h4>
+<pre><code class="language-json">{
+    &quot;id&quot;: &quot;shoes_0&quot;,
+
+    &quot;label&quot;: &quot;Supreme Greeny&quot;,
+
+    &quot;brand&quot;: &quot;Nike&quot;,
+
+    &quot;categoryId&quot;: &quot;shoes&quot;,
+
+    &quot;image&quot;: &quot;catalog/shoes/0.jpg&quot;,  
+
+    &quot;sizes&quot;: [&quot;39&quot;, &quot;43&quot;, &quot;44&quot;, &quot;45&quot;, &quot;46&quot;],
+
+    &quot;unitPrice&quot;: 59.9
+}
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-le-panier-cart" class="anchor" href="#le-panier-cart" aria-hidden="true"></a>Le panier (cart)</h4>
+<pre><code class="language-json">{
+    &quot;items&quot;: [
+        {
+            &quot;id&quot;: &quot;shoes_0&quot;,
+
+            &quot;label&quot;: &quot;Supreme Greeny&quot;,
+
+            &quot;brand&quot;: &quot;Nike&quot;,
+
+            &quot;categoryId&quot;: &quot;shoes&quot;,
+
+            &quot;image&quot;: &quot;catalog/shoes/0.jpg&quot;,
+
+            &quot;sizes&quot;: [&quot;39&quot;, &quot;43&quot;, &quot;44&quot;, &quot;45&quot;, &quot;46&quot;],
+
+            &quot;unitPrice&quot;: 59.9,
+
+            &quot;quantity&quot;: 3,
+
+            &quot;size&quot;: &quot;43&quot;
+        }
+    ]
+}
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h3><a id="user-content-les-services" class="anchor" href="#les-services" aria-hidden="true"></a>Les services</h3>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-servicescartindexjs" class="anchor" href="#servicescartindexjs" aria-hidden="true"></a>services/cart/index.js</h4>
+<pre><code class="language-javascript">// Retourne le contenu du panier
+cartService.cart;
+
+
+// Ajoute un article au panier
+cartService.addToCart(item);
+
+
+// Incrémente la quantité d'un article du panier
+cartService.incrementCartItem(itemId);
+
+
+// Décrémente la quantité d'un article du panier
+cartService.decrementCartItem(itemId);
+
+
+// Vide le panier
+cartService.emptyCart();
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-servicescatalogindexjs" class="anchor" href="#servicescatalogindexjs" aria-hidden="true"></a>services/catalog/index.js</h4>
+<pre><code class="language-javascript">// Retourne toutes les catégories de la boutique
+// (fonction async)
+await catalogService.getCategories();
+[
+    { &quot;id&quot;: &quot;jackets&quot;,  &quot;label&quot;: &quot;Vestes&quot;,     &quot;image&quot;: &quot;catalog/jackets/0.jpg&quot;  },
+    { &quot;id&quot;: &quot;t-shirts&quot;, &quot;label&quot;: &quot;T-shirts&quot;,   &quot;image&quot;: &quot;catalog/t-shirts/0.jpg&quot; },
+    { &quot;id&quot;: &quot;shoes&quot;,    &quot;label&quot;: &quot;Chaussures&quot;, &quot;image&quot;: &quot;catalog/shoes/0.jpg&quot;    }
+]
+
+// Retourne une catégorie et les articles associés
+// (fonction async)
+await cartService.getCategory(categoryId);
+{
+    &quot;id&quot;:       &quot;shoes&quot;,
+    &quot;label&quot;:    &quot;Chaussures&quot;,
+    &quot;image&quot;:    &quot;catalog/shoes/0.jpg&quot;,
+    &quot;items&quot;: [
+        {
+            &quot;id&quot;:           &quot;shoes_0&quot;,
+            &quot;label&quot;:        &quot;Supreme Greeny&quot;,
+            &quot;brand&quot;:        &quot;Nike&quot;,
+            &quot;categoryId&quot;:   &quot;shoes&quot;,
+            &quot;image&quot;:        &quot;catalog/shoes/0.jpg&quot;,
+            &quot;sizes&quot;:        [&quot;39&quot;, &quot;43&quot;, &quot;44&quot;, &quot;45&quot;, &quot;46&quot;],
+            &quot;unitPrice&quot;:    59.9
+        }
+    ]
+}
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h3><a id="user-content-travaux-à-réaliser" class="anchor" href="#travaux-à-réaliser" aria-hidden="true"></a>Travaux à réaliser</h3>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-la-page-daccueil" class="anchor" href="#la-page-daccueil" aria-hidden="true"></a>La Page d’accueil</h4>
+<pre><code class="language-md">- Compléter pour afficher la liste des catégories (chaussures, t-shirts...)  avec
+
+
+    - Le nom de la catégorie
+
+    - La photo de la catégorie
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-le-catalogue-initialisation" class="anchor" href="#le-catalogue-initialisation" aria-hidden="true"></a>Le catalogue (initialisation)</h4>
+<pre><code class="language-md">- Créer une nouvelle vue pour afficher le catalogue
+
+
+- Configurer le routeur pour la rendre accessible (/catalog/:categoryId)
+
+
+- Modifier la page d'accueil pour naviguer vers le catalogue
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-le-catalogue-affichage-des-articles" class="anchor" href="#le-catalogue-affichage-des-articles" aria-hidden="true"></a>Le catalogue (affichage des articles)</h4>
+<pre><code class="language-md">- Afficher les articles avec
+
+
+    - Le nom de l'article
+
+
+    - La marque de l'article
+
+
+    - La photo de l'article
+
+
+    - La liste des tailles disponibles
+
+
+    - Un bouton d'ajout au panier qui ajoute l'article au panier
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-le-catalogue-filtre-et-tri" class="anchor" href="#le-catalogue-filtre-et-tri" aria-hidden="true"></a>Le catalogue (filtre et tri)</h4>
+<pre><code class="language-md">- Ajouter une liste de choix des marques disponibles
+
+
+- Ajouter une liste de choix des tailles disponibles
+
+
+- Ajouter un bouton pour trier les articles par prix croissant
+
+
+- Ajouter un bouton pour trier les articles par prix décroissant
+
+
+- Afficher le nombre d'articles corresponsant aux critères
+
+
+- Afficher un message quand aucun article ne répond aux critères de recherche
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-le-panier-affichage" class="anchor" href="#le-panier-affichage" aria-hidden="true"></a>Le panier (affichage)</h4>
+<pre><code class="language-md">- Afficher sur le bouton d'ouverture du panier
+ 
+    - le nombre d'articles dans le panier
+
+
+- Afficher un message quand la panier est vide
+
+
+- Afficher chaque article du panier
+
+
+    - Nom, marque et taille
+
+
+    - Quantité
+
+
+    - Le prix total de l'article
+
+
+- Afficher le total du panier</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-le-panier-édition" class="anchor" href="#le-panier-édition" aria-hidden="true"></a>Le panier (édition)</h4>
+<pre><code class="language-md">- Ajouter pour chaque article
+
+
+    - un bouton pour incrémenter la quantité
+
+
+    - un bouton pour décrémenter la quantité
+ 
+
+- Ajouter un bouton &quot;Vider la panier&quot;
+
+
+- Ajouter un bouton &quot;Commander&quot; qui redirigera vers la page de paiement
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-la-commande-initialisation" class="anchor" href="#la-commande-initialisation" aria-hidden="true"></a>La commande (initialisation)</h4>
+<pre><code class="language-md">- Créer une nouvelle vue pour afficher la page de commande
+
+
+- Configurer le routeur pour la rendre accessible
+
+
+- Modifier le panier pour naviguer vers la commande
+
+
+- Masquer l'accès au panier (en haut à droite)
+    (pour éviter qu'il ne soit modifié
+    lorsque l'utilisateur est sur la page de la commande)
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-la-commande-panier" class="anchor" href="#la-commande-panier" aria-hidden="true"></a>La commande (panier)</h4>
+<pre><code class="language-md">- Afficher le récapitulatif du panier (non modifiable)
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-la-commande-livraison" class="anchor" href="#la-commande-livraison" aria-hidden="true"></a>La commande (livraison)</h4>
+<pre><code class="language-md">- Afficher un formulaire de livraison permettant la saisie de :
+
+
+    - Prénom
+
+
+    - Nom
+
+
+    - Adresse
+
+
+    - Code postal
+
+
+    - Ville
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-la-commande-paiement" class="anchor" href="#la-commande-paiement" aria-hidden="true"></a>La commande (paiement)</h4>
+<pre><code class="language-md">- Afficher un formulaire de paiement permettant la saisie de :
+
+
+    - Numéro de Carte Bancaire
+
+
+    - Date d'expiration de la carte
+
+
+    - CVC (Card Validation Code)
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-la-commande-validation" class="anchor" href="#la-commande-validation" aria-hidden="true"></a>La commande (validation)</h4>
+<pre><code class="language-md">- Implémenter un bouton de paiement accessible uniquement si
+
+
+    - Tous les champs de livraison sont renseignés
+
+
+    - Tous les champs de paiement sont renseignés
+
+
+- Le clic sur le bouton vide le panier
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-le-message-de-succès-suite-à-la-commande" class="anchor" href="#le-message-de-succès-suite-à-la-commande" aria-hidden="true"></a>Le message de succès suite à la commande</h4>
+<pre><code class="language-md">- Créer une nouvelle vue pour afficher la page de succès
+
+    - Avec un lien de retour vers la page d'accueil
+
+
+- Configurer le routeur pour la rendre accessible
+
+
+- Modifier le bouton payer pour naviguer vers la page de succès
+</code></pre>
+
+            </section>
+        
+            <section >
+                <h4><a id="user-content-grille-dévaluation" class="anchor" href="#grille-dévaluation" aria-hidden="true"></a>Grille d’évaluation</h4>
+<pre><code class="language-yaml">Modification Page d'accueil                         # 1
+
+Catalogue
+	Init                                        # 1
+	Affichage articles                          # 3
+	Filtre et tri                               # 3
+
+Panier
+	Affichage                                   # 2
+	Edition                                     # 2
+		
+Commande
+	Init                                        # 1
+	Récapitulatif panier                        # 1
+	Formulaire livraison                        # 2
+	Formulaire paiement                         # 1
+	Bouton payer                                # 1
+	
+Message félicitation                                # 1
+
+Qualité de code &amp; approche composants               # 1
+
+--------------------------------------------------------
+Total                                              # 20
+--------------------------------------------------------
+
+Bonus
+    Expérience Utilisateur                          # +1
+    Tests                                           # +1
+</code></pre>
+
+            </section>
+        
+
+    </section>
+    
+
+
+
+    
         <section >
             
             <h3><a id="user-content-the-end" class="anchor" href="#the-end" aria-hidden="true"></a>The end</h3>
