@@ -24,6 +24,18 @@
                 </ul>
             </li>
         </ul>
+
+        <li v-for="movie in movies" :keys="movie.Titre" v-if="movie.rating > 2">
+            <span v-if="movie.comingSoon === true" style="color:red">{{movie.title}}({{movie.year}})</span>
+            <span v-else>{{movie.title}}({{movie.year}})</span>
+            <!-- Faire une condition ternaire sur le style :style="movie.comingSoon?'color: red':''"-->
+            <ul>
+                <li v-for="actor in movie.actors" :key="actor">
+                    {{actor}}
+                </li>
+            </ul>
+        </li>
+        
     </div>
 
 </body>

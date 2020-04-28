@@ -4,6 +4,16 @@ function initApp() {
         data: {
             categories,
             countries,
+            categorySelected:{},
+        },
+
+        method:{
+            addToCard:function(){
+
+            }
+        },
+        computed:{
+            
         },
     });
 }
